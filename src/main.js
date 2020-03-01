@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 import App from './App.vue'
 import Routes from './routes'
