@@ -8,11 +8,11 @@
               <v-autocomplete
                 outlined
                 prepend-icon="domain"
-                :items="formData.autoCompleteVendor"
+                :items="formData.autoCompleteCust"
                 item-text="name"
                 item-value="id"
-                label="Vendor Name"
-                placeholder="Select Vendor Name"
+                label="Customer Name"
+                placeholder="Select Customer Name"
                 @change="autoCompleteChange"
                 return-object
               ></v-autocomplete>
@@ -22,9 +22,9 @@
                 rows="1"
                 prepend-icon="domain"
                 outlined
-                :value="formData.vendorData.information"
-                label="Vendor Information"
-                placeholder="Automatic filled when vendor has been selected"
+                :value="formData.customerData.information"
+                label="Customer Information"
+                placeholder="Automatic filled when customer has been selected"
                 filled
               ></v-textarea>
               <v-text-field
@@ -72,11 +72,49 @@
                 :hide-default-footer="true"
               >
                 <template v-slot:top>
-                  <v-toolbar flat color="white">
-                    <p class="title">Add Item</p>
-                    <v-divider class="mx-4" inset vertical></v-divider>
-                    <v-spacer></v-spacer>
-                    <v-dialog v-model="formData.table.dialog" max-width="500px">
+                  <!-- <v-toolbar flat color="white"> -->
+                  <v-row>
+                    <v-col>
+                      <p class="title">Add Item</p>
+                    </v-col>
+                  </v-row>
+                  <!-- <v-spacer></v-spacer> -->
+                  <v-row>
+                    <v-col>
+                      <v-autocomplete
+                        outlined
+                        :items="formData.autoCompleteCust"
+                        item-text="name"
+                        item-value="id"
+                        label="Customer Name"
+                        placeholder="Select Customer Name"
+                        return-object
+                      ></v-autocomplete>
+                    </v-col>
+                    <v-col>
+                      <v-text-field
+                        outlined
+                        label="Quantity"
+                        placeholder="2"
+                        @input="isNumber"
+                        v-model="formData.poNumber"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col>
+                      <v-text-field
+                        type="number"
+                        outlined
+                        label="Price Per Item"
+                        placeholder="150.000"
+                        prefix="Rp."
+                        v-model="formData.poNumber"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col align-self="stretch">
+                      <v-btn color="secondary">Add Item</v-btn>
+                    </v-col>
+                  </v-row>
+                  <!-- <v-dialog v-model="formData.table.dialog" max-width="500px">
                       <template v-slot:activator="{ on }">
                         <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
                       </template>
@@ -89,6 +127,16 @@
                           <v-container>
                             <v-row>
                               <v-col cols="12" sm="6" md="4">
+                                <v-autocomplete
+                                  outlined
+                                  prepend-icon="domain"
+                                  :items="formData.autoCompleteCust"
+                                  item-text="name"
+                                  item-value="id"
+                                  label="Customer Name"
+                                  placeholder="Select Customer Name"
+                                  return-object
+                                ></v-autocomplete>
                                 <v-text-field
                                   v-model="formData.table.editedItem.name"
                                   label="Item Name"
@@ -122,8 +170,8 @@
                           <v-btn color="blue darken-1" text>Save</v-btn>
                         </v-card-actions>
                       </v-card>
-                    </v-dialog>
-                  </v-toolbar>
+                  </v-dialog>-->
+                  <!-- </v-toolbar> -->
                 </template>
 
                 <template v-slot:item.actions="{ item }">
@@ -145,7 +193,7 @@
                 <div class="body-1" style="display: inline">Send To</div>
               </v-col>
               <v-col cols="8" class="text-right">
-                <div class="body-1" style="display: inline">{{ formData.vendorData.name }}</div>
+                <div class="body-1" style="display: inline">{{ formData.customerData.name }}</div>
               </v-col>
             </v-row>
             <v-row>
@@ -220,15 +268,19 @@ export default {
           total: 0
         }
       },
-      vendorData: {
+      customerData: {
         id: '',
         name: '',
         information: ''
       },
-      vendorInfo: '',
       poNumber: '',
       deliveryDate: '',
-      autoCompleteVendor: [
+      formItem: {
+        vendorID: '',
+        quantity: 0,
+        price: 0
+      },
+      autoCompleteCust: [
         {
           name: 'PT Rekso Nasional',
           id: 1,
@@ -262,9 +314,9 @@ export default {
     },
     autoCompleteChange(value) {
       // console.log(value)
-      this.formData.vendorData.id = value.id
-      this.formData.vendorData.name = value.name
-      this.formData.vendorData.information = value.information
+      this.formData.customerData.id = value.id
+      this.formData.customerData.name = value.name
+      this.formData.customerData.information = value.information
     },
     formatDate(date) {
       if (!date) return null
@@ -277,6 +329,9 @@ export default {
 
       const [month, day, year] = date.split('/')
       return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+    },
+    isNumber(val) {
+      console.log(val)
     }
   },
   computed: {
