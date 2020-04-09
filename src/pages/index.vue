@@ -19,7 +19,7 @@
       <v-toolbar-title>Delivery Order</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-subheader>Khalid Abdullah</v-subheader>
-      <v-btn icon>
+      <v-btn icon @click="handleBtnLogout">
         <v-icon>mdi-logout-variant</v-icon>
       </v-btn>
     </v-app-bar>
@@ -41,6 +41,12 @@ export default {
       { title: 'Delivery Order', icon: 'receipt' },
       { title: 'Invoice', icon: 'receipt' }
     ]
-  })
+  }),
+  methods: {
+    handleBtnLogout() {
+      localStorage.removeItem('token')
+      this.$router.push('/login')
+    }
+  }
 }
 </script>

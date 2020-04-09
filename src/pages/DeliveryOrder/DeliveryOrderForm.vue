@@ -1,120 +1,119 @@
 <template>
-  <v-container fluid>
-    <v-row>
-      <v-col cols="8">
-        <v-card>
-          <v-container>
-            <v-form>
-              <v-autocomplete
-                outlined
-                prepend-icon="domain"
-                :items="formData.autoCompleteCust"
-                item-text="name"
-                item-value="id"
-                label="Customer Name"
-                placeholder="Select Customer Name"
-                @change="autoCompleteChange"
-                return-object
-              ></v-autocomplete>
-              <v-textarea
-                auto-grow
-                disabled
-                rows="1"
-                prepend-icon="domain"
-                outlined
-                :value="formData.customerData.information"
-                label="Customer Information"
-                placeholder="Automatic filled when customer has been selected"
-                filled
-              ></v-textarea>
-              <v-text-field
-                prepend-icon="domain"
-                outlined
-                label="PO No"
-                placeholder="32304010"
-                v-model="formData.poNumber"
-              ></v-text-field>
+  <v-row>
+    <v-col cols="8">
+      <v-card>
+        <v-container>
+          <v-form>
+            <v-autocomplete
+              outlined
+              prepend-icon="domain"
+              :items="formData.autoCompleteCust"
+              item-text="name"
+              item-value="id"
+              label="Customer Name"
+              placeholder="Select Customer Name"
+              @change="autoCompleteChange"
+              return-object
+            ></v-autocomplete>
+            <v-textarea
+              auto-grow
+              disabled
+              rows="1"
+              prepend-icon="domain"
+              outlined
+              :value="formData.customerData.information"
+              label="Customer Information"
+              placeholder="Automatic filled when customer has been selected"
+              filled
+            ></v-textarea>
+            <v-text-field
+              prepend-icon="domain"
+              outlined
+              label="PO No"
+              placeholder="32304010"
+              v-model="formData.poNumber"
+            ></v-text-field>
 
-              <v-menu
-                v-model="menuDatePicker"
-                :close-on-content-click="false"
-                :nudge-right="40"
-                transition="scale-transition"
-                offset-y
-                max-width="290px"
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on }">
-                  <v-text-field
-                    label="Delivery Date"
-                    outlined
-                    prepend-icon="event"
-                    readonly
-                    :value="fromDateDisp"
-                    v-on="on"
-                    placeholder="Ex: 30-03-2020"
-                  ></v-text-field>
-                </template>
-                <v-date-picker
-                  title="Delivery Date"
-                  locale="en-in"
-                  v-model="date"
-                  no-title
-                  @input="menuDatePicker = false"
-                  @change="datePickerChange"
-                ></v-date-picker>
-              </v-menu>
+            <v-menu
+              v-model="menuDatePicker"
+              :close-on-content-click="false"
+              :nudge-right="40"
+              transition="scale-transition"
+              offset-y
+              max-width="290px"
+              min-width="290px"
+            >
+              <template v-slot:activator="{ on }">
+                <v-text-field
+                  label="Delivery Date"
+                  outlined
+                  prepend-icon="event"
+                  readonly
+                  :value="fromDateDisp"
+                  v-on="on"
+                  placeholder="Ex: 30-03-2020"
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                title="Delivery Date"
+                locale="en-in"
+                v-model="date"
+                no-title
+                @input="menuDatePicker = false"
+                @change="datePickerChange"
+              ></v-date-picker>
+            </v-menu>
 
-              <v-data-table
-                :headers="formData.table.headers"
-                class="elevation-1"
-                :hide-default-header="true"
-                :hide-default-footer="true"
-              >
-                <template v-slot:top>
-                  <!-- <v-toolbar flat color="white"> -->
-                  <v-row>
-                    <v-col>
-                      <p class="title">Add Item</p>
-                    </v-col>
-                  </v-row>
-                  <!-- <v-spacer></v-spacer> -->
-                  <v-row>
-                    <v-col>
-                      <v-autocomplete
-                        outlined
-                        :items="formData.autoCompleteCust"
-                        item-text="name"
-                        item-value="id"
-                        label="Customer Name"
-                        placeholder="Select Customer Name"
-                        return-object
-                      ></v-autocomplete>
-                    </v-col>
-                    <v-col>
-                      <v-text-field
-                        outlined
-                        label="Quantity"
-                        placeholder="2"
-                        @input="isNumber"
-                        v-model="formData.poNumber"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col>
-                      <v-text-field
-                        type="number"
-                        outlined
-                        label="Price Per Item"
-                        placeholder="150.000"
-                        prefix="Rp."
-                        v-model="formData.poNumber"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col align-self="stretch">
-                      <v-btn color="secondary">Add Item</v-btn>
-                    </v-col>
-                  </v-row>
-                  <!-- <v-dialog v-model="formData.table.dialog" max-width="500px">
+            <v-data-table
+              :headers="formData.table.headers"
+              class="elevation-1"
+              :hide-default-header="true"
+              :hide-default-footer="true"
+            >
+              <template v-slot:top>
+                <!-- <v-toolbar flat color="white"> -->
+                <v-row>
+                  <v-col>
+                    <p class="title">Add Item</p>
+                  </v-col>
+                </v-row>
+                <!-- <v-spacer></v-spacer> -->
+                <v-row>
+                  <v-col>
+                    <v-autocomplete
+                      outlined
+                      :items="formData.autoCompleteCust"
+                      item-text="name"
+                      item-value="id"
+                      label="Customer Name"
+                      placeholder="Select Customer Name"
+                      return-object
+                    ></v-autocomplete>
+                  </v-col>
+                  <v-col>
+                    <v-text-field
+                      outlined
+                      label="Quantity"
+                      placeholder="2"
+                      @keyup="isNumber"
+                      v-model="formData.formItem.quantity"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col>
+                    <v-text-field
+                      outlined
+                      label="Price Per Item"
+                      placeholder="150.000"
+                      prefix="Rp."
+                      @keyup="isNumber"
+                      v-model="formData.formItem.price"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col align-self="stretch">
+                    <v-btn color="secondary">Add Item</v-btn>
+                  </v-col>
+                </v-row>
+                <!-- <v-dialog v-model="formData.table.dialog" max-width="500px">
                       <template v-slot:activator="{ on }">
                         <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
                       </template>
@@ -170,74 +169,73 @@
                           <v-btn color="blue darken-1" text>Save</v-btn>
                         </v-card-actions>
                       </v-card>
-                  </v-dialog>-->
-                  <!-- </v-toolbar> -->
-                </template>
+                </v-dialog>-->
+                <!-- </v-toolbar> -->
+              </template>
 
-                <template v-slot:item.actions="{ item }">
-                  <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-                  <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
-                </template>
-              </v-data-table>
-            </v-form>
-          </v-container>
-        </v-card>
-      </v-col>
-      <v-col cols="4">
-        <v-card>
-          <v-container>
-            <div class="title">Summary</div>
-            <v-divider></v-divider>
-            <v-row>
-              <v-col cols="4" class="pb-0">
-                <div class="body-1" style="display: inline">Send To</div>
-              </v-col>
-              <v-col cols="8" class="text-right">
-                <div class="body-1" style="display: inline">{{ formData.customerData.name }}</div>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="4" class="pb-0">
-                <div class="body-1" style="display: inline">PO No</div>
-              </v-col>
-              <v-col cols="8" class="text-right">
-                <div class="body-1" style="display: inline">{{ `#${formData.poNumber}` }}</div>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="4" class="pb-0">
-                <div class="body-1" style="display: inline">DO Date</div>
-              </v-col>
-              <v-col cols="8" class="text-right">
-                <div class="body-1" style="display: inline">{{ formData.deliveryDate }}</div>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="4" class="pb-0">
-                <div class="body-1" style="display: inline">Total Qty</div>
-              </v-col>
-              <v-col cols="8" class="text-right">
-                <div class="body-1" style="display: inline">12 Units</div>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="4" class="pb-0">
-                <div class="body-1" style="display: inline">Total Price</div>
-              </v-col>
-              <v-col cols="8" class="text-right">
-                <div class="body-1" style="display: inline">Rp. 3.900.000,-</div>
-              </v-col>
-            </v-row>
-            <v-row align-content="stretch">
-              <v-col>
-                <v-btn>Create Delivery Order</v-btn>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+              <template v-slot:item.actions="{ item }">
+                <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+                <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+              </template>
+            </v-data-table>
+          </v-form>
+        </v-container>
+      </v-card>
+    </v-col>
+    <v-col cols="4">
+      <v-card>
+        <v-container>
+          <div class="title">Summary</div>
+          <v-divider></v-divider>
+          <v-row>
+            <v-col cols="4" class="pb-0">
+              <div class="body-1" style="display: inline">Send To</div>
+            </v-col>
+            <v-col cols="8" class="text-right">
+              <div class="body-1" style="display: inline">{{ formData.customerData.name }}</div>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="4" class="pb-0">
+              <div class="body-1" style="display: inline">PO No</div>
+            </v-col>
+            <v-col cols="8" class="text-right">
+              <div class="body-1" style="display: inline">{{ `#${formData.poNumber}` }}</div>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="4" class="pb-0">
+              <div class="body-1" style="display: inline">DO Date</div>
+            </v-col>
+            <v-col cols="8" class="text-right">
+              <div class="body-1" style="display: inline">{{ formData.deliveryDate }}</div>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="4" class="pb-0">
+              <div class="body-1" style="display: inline">Total Qty</div>
+            </v-col>
+            <v-col cols="8" class="text-right">
+              <div class="body-1" style="display: inline">12 Units</div>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="4" class="pb-0">
+              <div class="body-1" style="display: inline">Total Price</div>
+            </v-col>
+            <v-col cols="8" class="text-right">
+              <div class="body-1" style="display: inline">Rp. 3.900.000,-</div>
+            </v-col>
+          </v-row>
+          <v-row align-content="stretch">
+            <v-col>
+              <v-btn>Create Delivery Order</v-btn>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-card>
+    </v-col>
+  </v-row>
 </template>
 <script>
 export default {
@@ -276,7 +274,7 @@ export default {
       poNumber: '',
       deliveryDate: '',
       formItem: {
-        vendorID: '',
+        itemID: '',
         quantity: 0,
         price: 0
       },
@@ -330,8 +328,16 @@ export default {
       const [month, day, year] = date.split('/')
       return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
     },
-    isNumber(val) {
+    isNumber(e, val) {
       console.log(val)
+      this.formData.formItem.quantity = this.formData.formItem.quantity.replace(
+        /[^0-9]/g,
+        ''
+      )
+      // this.formData.formItem.price = this.formData.formItem.price.replace(
+      //   /[^0-9]/g,
+      //   ''
+      // )
     }
   },
   computed: {
