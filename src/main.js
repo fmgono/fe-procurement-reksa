@@ -16,6 +16,16 @@ const router = new VueRouter({
   base: process.env.BASE_URL
 })
 
+router.beforeEach((to, from, next) => {
+  const IS_AUTH = localStorage.getItem('token')
+  if (to.name != 'login') {
+    if (IS_AUTH == null) next({ name: 'login' })
+    else next()
+  } else {
+    IS_AUTH != null ? next({ name: 'baseApp' }) : next()
+  }
+})
+
 new Vue({
   router,
   vuetify,
