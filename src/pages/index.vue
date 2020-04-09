@@ -1,16 +1,30 @@
 <template>
   <div>
     <v-navigation-drawer v-model="drawer" app clipped>
-      <v-list>
-        <v-list-item v-for="menu in menus" :key="menu.title" link>
-          <v-list-item-icon>
-            <v-icon>{{ menu.icon }}</v-icon>
-          </v-list-item-icon>
+      <v-list shaped>
+        <router-link
+          :to="menu.link"
+          v-for="menu in menus"
+          :key="menu.title"
+          style="textDecoration: none"
+          v-slot="{href, route, navigate,isExactActive}"
+        >
+          <v-list-item
+            link
+            :class="[isExactActive && 'v-item--active v-list-item--active']"
+            color="primary"
+            :href="href"
+            @click="navigate"
+          >
+            <v-list-item-icon>
+              <v-icon>{{ menu.icon }}</v-icon>
+            </v-list-item-icon>
 
-          <v-list-item-content>
-            <v-list-item-title>{{ menu.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>{{ menu.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
       </v-list>
     </v-navigation-drawer>
 
@@ -38,8 +52,9 @@ export default {
     drawer: null,
     title: 'Dashboard Page',
     menus: [
-      { title: 'Delivery Order', icon: 'receipt' },
-      { title: 'Invoice', icon: 'receipt' }
+      { title: 'Dashboard', icon: 'mdi-view-dashboard-outline', link: '/' },
+      { title: 'Delivery Order', icon: 'receipt', link: '/delivery_order' },
+      { title: 'Invoice', icon: 'receipt', link: '/invoice' }
     ]
   }),
   methods: {
