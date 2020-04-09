@@ -25,11 +25,14 @@
     </v-app-bar>
 
     <v-content>
-      <router-view></router-view>
+      <v-container fluid>
+        <router-view></router-view>
+      </v-container>
     </v-content>
   </div>
 </template>
 <script>
+console.log('[BASE APP] => RENDERED!')
 export default {
   data: () => ({
     drawer: null,
