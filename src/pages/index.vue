@@ -46,7 +46,11 @@
   </div>
 </template>
 <script>
-const { user_code } = JSON.parse(localStorage.getItem('userAuth'))
+const userAuth = JSON.parse(localStorage.getItem('userAuth'))
+let user_code = userAuth ? userAuth.user_code : ''
+// if (userAuth) {
+//   user_code = userAuth.user_code
+// }
 
 export default {
   data: () => ({

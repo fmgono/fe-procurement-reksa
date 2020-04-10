@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import axios from 'axios'
 
 import App from './App.vue'
 import Routes from './routes'
@@ -17,12 +18,22 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const IS_AUTH = JSON.parse(localStorage.getItem('userAuth'))
+  const userAuth = JSON.parse(localStorage.getItem('userAuth'))
+  const token = userAuth ? userAuth.token : null
   if (to.name != 'login') {
-    if (IS_AUTH == null) next({ name: 'login' })
-    else next()
+    if (token == null) {
+      next({ name: 'login' })
+    } else {
+      axios
+        .get(`${process.env.VUE_APP_BASE_API_URL}api/user?token=${token}`)
+        .then(() => next())
+        .catch(() => {
+          localStorage.removeItem('userAuth')
+          next({ name: 'login' })
+        })
+    }
   } else {
-    IS_AUTH != null ? next({ name: 'baseApp' }) : next()
+    token != null ? next({ name: 'baseApp' }) : next()
   }
 })
 
