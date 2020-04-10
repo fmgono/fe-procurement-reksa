@@ -1,3 +1,4 @@
+import NotFound from '@/pages/404.vue'
 import DeliveryOrderForm from '@/pages/DeliveryOrder/DeliveryOrderForm.vue'
 import DeliveryOrderList from '@/pages/DeliveryOrder/DeliveryOrderList.vue'
 import Dashboard from '@/pages/Dashboard/Dashboard.vue'
@@ -37,6 +38,13 @@ export default [
         component: DeliveryOrderForm,
         meta: {
           title: 'Add Delivery Order'
+        }
+      },
+      {
+        path: '*',
+        component: NotFound,
+        meta: {
+          title: '404 Not Found!'
         }
       }
     ]
