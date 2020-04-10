@@ -30,7 +30,7 @@
 
     <v-app-bar color="primary" dark app clipped-left>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Delivery Order</v-toolbar-title>
+      <v-toolbar-title>{{menuTitle}}</v-toolbar-title>
       <v-spacer></v-spacer>
       <div class="subtitle-1">Khalid Abdullah</div>
       <v-btn icon @click="handleBtnLogout">
@@ -50,7 +50,7 @@ console.log('[BASE APP] => RENDERED!')
 export default {
   data: () => ({
     drawer: null,
-    title: 'Dashboard Page',
+    menuTitle: 'Dashboard Page',
     menus: [
       { title: 'Dashboard', icon: 'mdi-view-dashboard-outline', link: '/' },
       { title: 'Delivery Order', icon: 'receipt', link: '/delivery_order' },
@@ -61,6 +61,15 @@ export default {
     handleBtnLogout() {
       localStorage.removeItem('userAuth')
       this.$router.push('/login')
+    }
+  },
+  watch: {
+    $route: {
+      immediate: true,
+      handler(to) {
+        document.title += ` - ${to.meta.title}`
+        this.menuTitle = to.meta.title
+      }
     }
   }
 }

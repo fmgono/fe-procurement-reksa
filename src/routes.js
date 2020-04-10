@@ -8,7 +8,10 @@ export default [
   {
     path: '/login',
     name: 'login',
-    component: Login
+    component: Login,
+    meta: {
+      title: 'Login'
+    }
   },
   {
     path: '/',
@@ -17,15 +20,24 @@ export default [
     children: [
       {
         path: '/',
-        component: Dashboard
+        component: Dashboard,
+        meta: {
+          title: 'Dashboard'
+        }
       },
       {
         path: 'delivery_order',
-        component: DeliveryOrderList
+        component: DeliveryOrderList,
+        meta: {
+          title: 'List Delivery Order'
+        }
       },
       {
         path: 'delivery_order/add',
-        component: DeliveryOrderForm
+        component: DeliveryOrderForm,
+        meta: {
+          title: 'Add Delivery Order'
+        }
       }
     ]
   }

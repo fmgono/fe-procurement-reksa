@@ -5,6 +5,8 @@
 </template>
 
 <script>
+document.title = 'Procurement'
+
 export default {
   name: 'App',
   components: {},
