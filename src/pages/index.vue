@@ -32,7 +32,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>{{menuTitle}}</v-toolbar-title>
       <v-spacer></v-spacer>
-      <div class="subtitle-1">Khalid Abdullah</div>
+      <div class="subtitle-1">{{userCode}}</div>
       <v-btn icon @click="handleBtnLogout">
         <v-icon>mdi-logout-variant</v-icon>
       </v-btn>
@@ -46,11 +46,13 @@
   </div>
 </template>
 <script>
-console.log('[BASE APP] => RENDERED!')
+const { user_code } = JSON.parse(localStorage.getItem('userAuth'))
+
 export default {
   data: () => ({
     drawer: null,
     menuTitle: 'Dashboard Page',
+    userCode: user_code || '',
     menus: [
       { title: 'Dashboard', icon: 'mdi-view-dashboard-outline', link: '/' },
       { title: 'Delivery Order', icon: 'receipt', link: '/delivery_order' },
