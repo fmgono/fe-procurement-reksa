@@ -65,13 +65,15 @@ export default {
     handleSubmit() {
       this.btnLoading = true
       axios
-        .post('http://api_do_hub.test/api/login', {
+        .post(`${process.env.VUE_APP_BASE_API_URL}api/login`, {
           user_code: this.usercode,
           password: this.password
         })
         .then(response => {
           this.btnLoading = false
-          localStorage.setItem('token', response.data.token)
+          const userAuth = { ...response.data.data }
+          userAuth.token = response.data.message
+          localStorage.setItem('userAuth', JSON.stringify(userAuth))
           this.$router.push('/')
         })
         .catch(e => {

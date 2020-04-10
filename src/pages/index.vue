@@ -32,7 +32,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Delivery Order</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-subheader>Khalid Abdullah</v-subheader>
+      <div class="subtitle-1">Khalid Abdullah</div>
       <v-btn icon @click="handleBtnLogout">
         <v-icon>mdi-logout-variant</v-icon>
       </v-btn>
@@ -59,7 +59,7 @@ export default {
   }),
   methods: {
     handleBtnLogout() {
-      localStorage.removeItem('token')
+      localStorage.removeItem('userAuth')
       this.$router.push('/login')
     }
   }

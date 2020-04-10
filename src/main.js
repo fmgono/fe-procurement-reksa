@@ -17,7 +17,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const IS_AUTH = localStorage.getItem('token')
+  const IS_AUTH = JSON.parse(localStorage.getItem('userAuth'))
   if (to.name != 'login') {
     if (IS_AUTH == null) next({ name: 'login' })
     else next()
