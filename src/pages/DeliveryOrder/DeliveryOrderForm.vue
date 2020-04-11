@@ -88,7 +88,8 @@
                       <v-autocomplete
                         :items="formData.autoCompleteItems"
                         :rules="[v => !!v || 'Items field is required']"
-                        :key="''"
+                        v-model="formData.formItem.itemID"
+                        :key="formData.formItem.itemID"
                         item-text="deskripsi_barang"
                         item-value="kode"
                         label="Items"
