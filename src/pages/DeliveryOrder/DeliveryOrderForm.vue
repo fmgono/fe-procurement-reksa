@@ -234,7 +234,7 @@
               </v-col>
             </v-row>
             <v-row align-content="stretch">
-              <v-col>
+              <v-col :style="style.btnCreateDOStyle">
                 <v-btn
                   color="primary"
                   :disabled="!isFormWrapperValid"
@@ -262,6 +262,11 @@ export default {
       btnAddItemStyle: {
         display: 'flex',
         justifyContent: 'flex-end'
+      },
+      btnCreateDOStyle: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'stretch'
       }
     },
     dialogProcess: {
