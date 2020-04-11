@@ -352,15 +352,19 @@ export default {
       return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
     },
     onlyAllowNumeric() {
-      this.formData.formItem.quantity = this.formData.formItem.quantity.replace(
-        /[^0-9]/g,
-        ''
-      )
+      try {
+        this.formData.formItem.quantity = this.formData.formItem.quantity.replace(
+          /[^0-9]/g,
+          ''
+        )
 
-      this.formData.formItem.price = this.formData.formItem.price.replace(
-        /[^0-9]/g,
-        ''
-      )
+        this.formData.formItem.price = this.formData.formItem.price.replace(
+          /[^0-9]/g,
+          ''
+        )
+      } catch (error) {
+        return true // to skip showing error in console
+      }
     },
     sumQtyAndPriceOfItems(items) {
       const totalQty = items.reduce((prev, cur) => prev + cur.do_qty, 0)
