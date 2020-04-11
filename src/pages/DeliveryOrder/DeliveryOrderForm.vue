@@ -67,6 +67,55 @@
               ></v-date-picker>
             </v-menu>
 
+            <v-form ref="formItem" v-model="isFormItemsValid">
+              <v-row>
+                <v-col>
+                  <p class="title">Add Item</p>
+                </v-col>
+              </v-row>
+              <v-row justify="space-between">
+                <v-col>
+                  <v-autocomplete
+                    :items="formData.autoCompleteItems"
+                    :rules="[v => !!v || 'Items field is required']"
+                    v-model="formData.formItem.itemID"
+                    :key="formData.formItem.itemID"
+                    item-text="deskripsi_barang"
+                    item-value="kode"
+                    label="Items"
+                    placeholder="Select Items"
+                    return-object
+                    @change="inputItemChange"
+                  ></v-autocomplete>
+                </v-col>
+                <v-col>
+                  <v-text-field
+                    :rules="[v => !!v || 'Quantity is required']"
+                    label="Quantity"
+                    placeholder="2"
+                    @keyup="onlyAllowNumeric"
+                    v-model="formData.formItem.quantity"
+                  ></v-text-field>
+                </v-col>
+                <v-col>
+                  <v-text-field
+                    :rules="[v => !!v || 'Price is required']"
+                    label="Price Per Item"
+                    prefix="Rp."
+                    @keyup="onlyAllowNumeric"
+                    v-model="formData.formItem.price"
+                  ></v-text-field>
+                </v-col>
+                <v-col align-self="center" :style="style.btnAddItemStyle">
+                  <v-btn
+                    color="secondary"
+                    :disabled="!isFormItemsValid"
+                    @click.prevent="addItemHandler"
+                  >Add Item</v-btn>
+                </v-col>
+              </v-row>
+            </v-form>
+
             <v-data-table
               disable-sortisFormItemsValid
               disable-filtering
@@ -75,57 +124,9 @@
               class="elevation-1"
               :hide-default-footer="true"
             >
-              <template v-slot:top>
-                <v-form ref="formItem" v-model="isFormItemsValid">
-                  <v-row>
-                    <v-col>
-                      <p class="title">Add Item</p>
-                    </v-col>
-                  </v-row>
-                  <!-- <v-spacer></v-spacer> -->
-                  <v-row>
-                    <v-col>
-                      <v-autocomplete
-                        :items="formData.autoCompleteItems"
-                        :rules="[v => !!v || 'Items field is required']"
-                        v-model="formData.formItem.itemID"
-                        :key="formData.formItem.itemID"
-                        item-text="deskripsi_barang"
-                        item-value="kode"
-                        label="Items"
-                        placeholder="Select Items"
-                        return-object
-                        @change="inputItemChange"
-                      ></v-autocomplete>
-                    </v-col>
-                    <v-col>
-                      <v-text-field
-                        :rules="[v => !!v || 'Quantity is required']"
-                        label="Quantity"
-                        placeholder="2"
-                        @keyup="onlyAllowNumeric"
-                        v-model="formData.formItem.quantity"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col>
-                      <v-text-field
-                        :rules="[v => !!v || 'Price is required']"
-                        label="Price Per Item"
-                        prefix="Rp."
-                        @keyup="onlyAllowNumeric"
-                        v-model="formData.formItem.price"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col align-self="center">
-                      <v-btn
-                        color="secondary"
-                        :disabled="!isFormItemsValid"
-                        @click.prevent="addItemHandler"
-                      >Add Item</v-btn>
-                    </v-col>
-                  </v-row>
-                </v-form>
-              </template>
+              <!-- <template v-slot:top>
+                
+              </template>-->
 
               <template v-slot:item.actions="{ item }">
                 <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
@@ -143,42 +144,45 @@
           <v-divider></v-divider>
           <v-row>
             <v-col cols="4" class="pb-0">
-              <div class="body-1" style="display: inline">Send To</div>
+              <div class="body-1" :style="style.summaryStyle">Send To</div>
             </v-col>
             <v-col cols="8" class="text-right">
-              <div class="body-1" style="display: inline">{{ formData.customerData.name }}</div>
+              <div class="body-1" :style="style.summaryStyle">{{ formData.customerData.name }}</div>
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="4" class="pb-0">
-              <div class="body-1" style="display: inline">PO No</div>
+              <div class="body-1" :style="style.summaryStyle">PO No</div>
             </v-col>
             <v-col cols="8" class="text-right">
-              <div class="body-1" style="display: inline">{{ `#${formData.poNumber}` }}</div>
+              <div class="body-1" :style="style.summaryStyle">{{ `#${formData.poNumber}` }}</div>
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="4" class="pb-0">
-              <div class="body-1" style="display: inline">DO Date</div>
+              <div class="body-1" :style="style.summaryStyle">DO Date</div>
             </v-col>
             <v-col cols="8" class="text-right">
-              <div class="body-1" style="display: inline">{{ formData.deliveryDate }}</div>
+              <div class="body-1" :style="style.summaryStyle">{{ formData.deliveryDate }}</div>
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="4" class="pb-0">
-              <div class="body-1" style="display: inline">Total Qty</div>
+              <div class="body-1" :style="style.summaryStyle">Total Qty</div>
             </v-col>
             <v-col cols="8" class="text-right">
-              <div class="body-1" style="display: inline">{{ formData.summary.totalQty }}</div>
+              <div class="body-1" :style="style.summaryStyle">{{ formData.summary.totalQty }}</div>
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="4" class="pb-0">
-              <div class="body-1" style="display: inline">Total Price</div>
+              <div class="body-1" :style="style.summaryStyle">Total Price</div>
             </v-col>
             <v-col cols="8" class="text-right">
-              <div class="body-1" style="display: inline">{{ formData.summary.totalPriceCurrency }}</div>
+              <div
+                class="body-1"
+                :style="style.summaryStyle"
+              >{{ formData.summary.totalPriceCurrency }}</div>
             </v-col>
           </v-row>
           <v-row align-content="stretch">
@@ -202,6 +206,15 @@ const { token } = JSON.parse(localStorage.getItem('userAuth'))
 
 export default {
   data: () => ({
+    style: {
+      summaryStyle: {
+        display: 'inline'
+      },
+      btnAddItemStyle: {
+        display: 'flex',
+        justifyContent: 'flex-end'
+      }
+    },
     isFormWrapperValid: true,
     isFormItemsValid: true,
     formData: {
