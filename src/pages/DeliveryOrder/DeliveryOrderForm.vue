@@ -53,6 +53,7 @@
           <v-container>
             <v-form v-model="isFormWrapperValid">
               <v-autocomplete
+                autofocus
                 outlined
                 :rules="[v => !!v || 'Customer field is required']"
                 prepend-icon="domain"
@@ -299,7 +300,6 @@ export default {
           { text: 'Actions', value: 'actions', sortable: false }
         ],
         items: [],
-        editedIndex: -1,
         editedItem: {
           name: '',
           itemQty: 0,
@@ -366,80 +366,55 @@ export default {
     },
     addItemHandler() {
       const unique_id = Date.now()
-      const inputedItem = {
-        id: unique_id, // generate uniq number
-        do_itemid: this.formData.formItem.itemID,
-        do_deskripsi: this.formData.formItem.itemName,
-        do_qty: parseInt(this.formData.formItem.quantity),
-        do_cost:
-          parseInt(this.formData.formItem.quantity) *
-          parseInt(this.formData.formItem.price)
-      }
+      let { itemID, itemName, quantity, price } = this.formData.formItem
+      quantity = parseInt(quantity)
+      price = parseInt(price)
+      const totalPrice = quantity * price
+      const inputedItem = this.createItemObj(unique_id, itemID, quantity, price)
+      const displayToTable = this.createItemTable(
+        unique_id,
+        itemID,
+        itemName,
+        quantity,
+        price,
+        totalPrice
+      )
+
       this.formData.items.push(inputedItem)
-
-      const displayToTable = {
-        id: unique_id, //
-        name: `${this.formData.formItem.itemID} - ${this.formData.formItem.itemName}`,
-        itemQty: parseInt(this.formData.formItem.quantity),
-        pricePerItem: `Rp. ${parseInt(
-          this.formData.formItem.price
-        ).toLocaleString('id')}`,
-        total: `Rp. ${(
-          parseInt(this.formData.formItem.quantity) *
-          parseInt(this.formData.formItem.price)
-        ).toLocaleString('id')}`
-      }
-
-      this.sumQtyAndPriceOfItems(this.formData.items)
-
       this.formData.table.items.push(displayToTable)
-
-      this.formData.formItem.itemID = undefined
-      this.formData.formItem.itemName = undefined
-      this.$refs.formItem.reset()
+      this.resetFormItem()
     },
     editItemHandler() {
+      let { id, itemID, itemName, quantity, price } = this.formData.formItem
+      quantity = parseInt(quantity)
+      price = parseInt(price)
+      const totalPrice = quantity * price
       const indexOfSelectedItem = this.formData.items.findIndex(
         item => item.id == this.formData.formItem.id
       )
-      const indexOfSelectedItemInTable = this.formData.table.items.findIndex(
+      const indexOfSelectedItemTable = this.formData.table.items.findIndex(
         item => item.id == this.formData.formItem.id
       )
 
-      const editedItem = {
-        id: this.formData.formItem.id, // generate uniq number
-        do_itemid: this.formData.formItem.itemID,
-        do_deskripsi: this.formData.formItem.itemName,
-        do_qty: parseInt(this.formData.formItem.quantity),
-        do_cost:
-          parseInt(this.formData.formItem.quantity) *
-          parseInt(this.formData.formItem.price)
-      }
-
-      const displayToTable = {
-        id: this.formData.formItem.id, //
-        name: `${this.formData.formItem.itemID} - ${this.formData.formItem.itemName}`,
-        itemQty: parseInt(this.formData.formItem.quantity),
-        pricePerItem: `Rp. ${parseInt(
-          this.formData.formItem.price
-        ).toLocaleString('id')}`,
-        total: `Rp. ${(
-          parseInt(this.formData.formItem.quantity) *
-          parseInt(this.formData.formItem.price)
-        ).toLocaleString('id')}`
-      }
+      const editedItem = this.createItemObj(id, itemID, quantity, price)
+      const displayToTable = this.createItemTable(
+        id,
+        itemID,
+        itemName,
+        quantity,
+        price,
+        totalPrice
+      )
 
       this.formData.items.splice(indexOfSelectedItem, 1, editedItem)
       this.formData.table.items.splice(
-        indexOfSelectedItemInTable,
+        indexOfSelectedItemTable,
         1,
         displayToTable
       )
-      this.sumQtyAndPriceOfItems(this.formData.items)
-      this.formData.formItem.itemID = undefined
-      this.formData.formItem.itemName = undefined
-      this.$refs.formItem.reset()
+
       this.formData.isItemEdited = false
+      this.resetFormItem()
     },
     deleteitemHandler(id) {
       const indexOfSelectedItem = this.formData.items.findIndex(
@@ -521,6 +496,29 @@ export default {
           this.dialogProcess.successMessage = `Delivery Order has been successfully created with no ${resp.data.data_mst.do_seq} !`
         })
         .catch(e => console.error(e))
+    },
+    createItemObj(id, itemID, qty, cost) {
+      return {
+        id: id,
+        do_itemid: itemID,
+        do_deskripsi: '',
+        do_qty: qty,
+        do_cost: cost
+      }
+    },
+    createItemTable(id, itemID, itemName, qty, pricePerItem, totalPrice) {
+      return {
+        id: id,
+        name: `${itemID} - ${itemName}`,
+        itemQty: qty,
+        pricePerItem: `Rp. ${pricePerItem.toLocaleString('id')}`,
+        total: `Rp. ${totalPrice.toLocaleString('id')}`
+      }
+    },
+    resetFormItem() {
+      this.formData.formItem.itemID = undefined
+      this.formData.formItem.itemName = undefined
+      this.$refs.formItem.reset()
     }
   },
   computed: {
@@ -534,6 +532,7 @@ export default {
         this.formData.items.length > 0 ? newValue : false
     },
     'formData.items': function(newValue) {
+      this.sumQtyAndPriceOfItems(this.formData.items)
       if (newValue.length > 0) {
         this.isFormWrapperValid = !this.isFormWrapperValid
           ? !this.isFormWrapperValid
