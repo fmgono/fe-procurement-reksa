@@ -1,6 +1,3 @@
-import NotFound from '@/pages/404.vue'
-import DeliveryOrderForm from '@/pages/DeliveryOrder/DeliveryOrderForm.vue'
-import DeliveryOrderList from '@/pages/DeliveryOrder/DeliveryOrderList.vue'
 import Dashboard from '@/pages/Dashboard/Dashboard.vue'
 import BaseApp from '@/pages/index.vue'
 import Login from '@/pages/Login/Login.vue'
@@ -28,21 +25,21 @@ export default [
       },
       {
         path: 'delivery_order',
-        component: DeliveryOrderList,
+        component: () => import('@/pages/DeliveryOrder/DeliveryOrderList.vue'),
         meta: {
           title: 'List Delivery Order'
         }
       },
       {
         path: 'delivery_order/add',
-        component: DeliveryOrderForm,
+        component: () => import('@/pages/DeliveryOrder/DeliveryOrderForm.vue'),
         meta: {
           title: 'Add Delivery Order'
         }
       },
       {
         path: '*',
-        component: NotFound,
+        component: () => import('@/pages/404.vue'),
         meta: {
           title: '404 Not Found!'
         }
