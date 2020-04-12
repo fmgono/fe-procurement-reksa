@@ -470,7 +470,10 @@ export default {
     },
     sumQtyAndPriceOfItems(items) {
       const totalQty = items.reduce((prev, cur) => prev + cur.do_qty, 0)
-      const totalPrice = items.reduce((prev, cur) => prev + cur.do_cost, 0)
+      const totalPrice = items.reduce(
+        (prev, cur) => prev + cur.do_cost * cur.do_qty,
+        0
+      )
 
       this.formData.summary.totalQty = totalQty
       this.formData.summary.totalPrice = totalPrice
@@ -484,7 +487,8 @@ export default {
       axios
         .post(`${process.env.VUE_APP_BASE_API_URL}api/do/insert`, {
           do_custid: this.formData.customerData.id,
-          do_deskripsi: 'i',
+          do_deskripsi: '',
+          po_seq: this.formData.poNumber,
           do_date: this.formData.deliveryDate,
           token: token,
           do_detail: this.formData.items
