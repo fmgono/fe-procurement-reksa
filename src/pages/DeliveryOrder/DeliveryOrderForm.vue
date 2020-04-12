@@ -157,6 +157,13 @@
                   <v-col align-self="center" :style="style.btnAddItemStyle">
                     <v-btn
                       color="secondary"
+                      :class="[!formData.isItemEdited && 'd-none']"
+                      :disabled="!isFormItemsValid"
+                      @click.prevent="editItemHandler"
+                    >Edit Item</v-btn>
+                    <v-btn
+                      color="secondary"
+                      :class="[formData.isItemEdited && 'd-none']"
                       :disabled="!isFormItemsValid"
                       @click.prevent="addItemHandler"
                     >Add Item</v-btn>
@@ -173,7 +180,7 @@
                 :hide-default-footer="true"
               >
                 <template v-slot:item.actions="{ item }">
-                  <v-icon small class="mr-2" @click="editItemHandler(item.id)">mdi-pencil</v-icon>
+                  <v-icon small class="mr-2" @click="selectItemToEdit(item.id)">mdi-pencil</v-icon>
                   <v-icon small @click="deleteitemHandler(item.id)">mdi-delete</v-icon>
                 </template>
               </v-data-table>
@@ -276,6 +283,7 @@ export default {
     isFormItemsValid: true,
     formData: {
       items: [],
+      isItemEdited: false,
       summary: {
         totalQty: 0,
         totalPrice: 0,
@@ -313,6 +321,7 @@ export default {
       poNumber: '',
       deliveryDate: '',
       formItem: {
+        id: '',
         itemID: '',
         itemName: '',
         quantity: 0,
@@ -389,6 +398,49 @@ export default {
       this.formData.formItem.itemName = undefined
       this.$refs.formItem.reset()
     },
+    editItemHandler() {
+      const indexOfSelectedItem = this.formData.items.findIndex(
+        item => item.id == this.formData.formItem.id
+      )
+      const indexOfSelectedItemInTable = this.formData.table.items.findIndex(
+        item => item.id == this.formData.formItem.id
+      )
+
+      const editedItem = {
+        id: this.formData.formItem.id, // generate uniq number
+        do_itemid: this.formData.formItem.itemID,
+        do_deskripsi: this.formData.formItem.itemName,
+        do_qty: parseInt(this.formData.formItem.quantity),
+        do_cost:
+          parseInt(this.formData.formItem.quantity) *
+          parseInt(this.formData.formItem.price)
+      }
+
+      const displayToTable = {
+        id: this.formData.formItem.id, //
+        name: `${this.formData.formItem.itemID} - ${this.formData.formItem.itemName}`,
+        itemQty: parseInt(this.formData.formItem.quantity),
+        pricePerItem: `Rp. ${parseInt(
+          this.formData.formItem.price
+        ).toLocaleString('id')}`,
+        total: `Rp. ${(
+          parseInt(this.formData.formItem.quantity) *
+          parseInt(this.formData.formItem.price)
+        ).toLocaleString('id')}`
+      }
+
+      this.formData.items.splice(indexOfSelectedItem, 1, editedItem)
+      this.formData.table.items.splice(
+        indexOfSelectedItemInTable,
+        1,
+        displayToTable
+      )
+      this.sumQtyAndPriceOfItems(this.formData.items)
+      this.formData.formItem.itemID = undefined
+      this.formData.formItem.itemName = undefined
+      this.$refs.formItem.reset()
+      this.formData.isItemEdited = false
+    },
     deleteitemHandler(id) {
       const indexOfSelectedItem = this.formData.items.findIndex(
         item => item.id == id
@@ -396,11 +448,13 @@ export default {
       this.formData.items.splice(indexOfSelectedItem, 1)
       this.formData.table.items.splice(indexOfSelectedItem, 1)
     },
-    editItemHandler(id) {
+    selectItemToEdit(id) {
       const filteredItem = this.formData.items.find(item => item.id == id)
       this.formData.formItem.itemID = filteredItem.do_itemid
       this.formData.formItem.quantity = filteredItem.do_qty
       this.formData.formItem.price = filteredItem.do_cost
+      this.formData.formItem.id = filteredItem.id
+      this.formData.isItemEdited = true
     },
     inputItemChange(value) {
       this.formData.formItem.itemID = value.kode
