@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-navigation-drawer v-model="drawer" app clipped>
+    <v-navigation-drawer v-model="drawer" app clipped class="d-print-none">
       <v-list shaped>
         <router-link
           :to="menu.link"
@@ -28,7 +28,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar color="primary" dark app clipped-left>
+    <v-app-bar color="primary" dark app clipped-left class="d-print-none">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>{{menuTitle}}</v-toolbar-title>
       <v-spacer></v-spacer>
