@@ -45,6 +45,13 @@ export default [
         }
       },
       {
+        path: 'invoice',
+        component: () => import('@/pages/Invoice/InvoiceList.vue'),
+        meta: {
+          title: 'List Invoice'
+        }
+      },
+      {
         path: '*',
         component: () => import('@/pages/404.vue'),
         meta: {
