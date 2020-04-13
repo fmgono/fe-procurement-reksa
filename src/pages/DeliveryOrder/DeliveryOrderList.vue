@@ -69,18 +69,23 @@
         loading-text="Fetching the data..."
       >
         <template v-slot:item.status="{ item }">
-          <v-chip small :color="getColorBg(item.flag_invoice)" dark>
-            {{
-            checkStatus(item.flag_invoice)
-            }}
-          </v-chip>
+          <v-chip
+            small
+            :color="getColorBg(item.flag_invoice)"
+            dark
+          >{{checkStatus(item.flag_invoice)}}</v-chip>
         </template>
         <template v-slot:item.actions="{ item }">
           <v-btn small text color="primary">
             <v-icon left>mdi-tray-full</v-icon>
             <span>Print</span>
           </v-btn>
-          <v-btn small color="primary" @click="btnInvoiceHandler(item.do_seq)">
+          <v-btn
+            :disabled="item.flag_invoice"
+            small
+            color="primary"
+            @click="btnInvoiceHandler(item.do_seq)"
+          >
             <v-icon left>mdi-tray-full</v-icon>
             <span>to invoice</span>
           </v-btn>
