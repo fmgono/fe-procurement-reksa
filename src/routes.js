@@ -38,6 +38,13 @@ export default [
         }
       },
       {
+        path: 'delivery_order/print/:doNo',
+        component: () => import('@/pages/DeliveryOrder/DeliveryOrderPrint.vue'),
+        meta: {
+          title: 'Print Delivery Order'
+        }
+      },
+      {
         path: '*',
         component: () => import('@/pages/404.vue'),
         meta: {
