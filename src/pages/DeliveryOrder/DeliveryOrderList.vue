@@ -16,8 +16,8 @@
           ></v-progress-linear>
           <v-alert
             :class="[!dialogProcess.isSuccess ? 'd-none' : '']"
-            type="success"
-          >{{ dialogProcess.successMessage }}</v-alert>
+            :type="getStatusResponse"
+          >{{ dialogProcess.responseMessage }}</v-alert>
         </v-card-text>
         <!-- <v-card-text :class="[!dialogProcess.isSuccess ? 'd-none' : '']"></v-card-text> -->
         <v-card-actions>
@@ -39,13 +39,13 @@
             text
             :class="[dialogProcess.isSuccess && 'd-none']"
             @click="dialogProcess.confirmation = false"
-          >No, will check again</v-btn>
+          >No</v-btn>
           <v-btn
             color="primary"
             text
             :class="[dialogProcess.isSuccess && 'd-none']"
             @click="btnSureHandler"
-          >Yes, I'm Sure</v-btn>
+          >Yes</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -121,7 +121,8 @@ export default {
       isBtnDisabled: false,
       isLoading: false,
       isSuccess: false,
-      successMessage: ''
+      isFailed: false,
+      responseMessage: ''
     },
     headers: [
       { text: 'DO No', value: 'do_seq' },
@@ -164,7 +165,11 @@ export default {
         .then(resp => {
           this.dialogProcess.isLoading = false
           this.dialogProcess.isSuccess = true
-          this.dialogProcess.successMessage = `Invoice has been successfully created with no ${resp.data.data_mst.inv_seq} !`
+          this.dialogProcess.responseMessage = `Invoice has been successfully created with no ${resp.data.data_mst.inv_seq} !`
+        })
+        .catch(() => {
+          this.dialogProcess.isLoading = false
+          alert('Oops! Something wrong, try again later!')
         })
     },
     btnInvoiceHandler(doNo) {
@@ -179,6 +184,11 @@ export default {
     getColorBg(flag_invoice) {
       const color = flag_invoice ? 'green' : 'warning'
       return color
+    }
+  },
+  computed: {
+    getStatusResponse() {
+      return this.dialogProcess.isFailed ? 'error' : 'success'
     }
   }
 }
