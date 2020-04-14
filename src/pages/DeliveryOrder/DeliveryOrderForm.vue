@@ -160,6 +160,7 @@
                       prefix="Rp."
                       @keyup="onlyAllowNumeric"
                       v-model="formData.formItem.price"
+                      :disabled="!formData.formItem.isEdited"
                     ></v-text-field>
                   </v-col>
                   <v-col align-self="center" :style="style.btnAddItemStyle">
@@ -333,7 +334,8 @@ export default {
         itemID: '',
         itemName: '',
         quantity: 0,
-        price: 0
+        price: 0,
+        isEdited: true
       },
       autoCompleteCust: [
         {
@@ -443,6 +445,7 @@ export default {
       this.formData.formItem.itemID = value.kode
       this.formData.formItem.itemName = value.deskripsi_barang
       this.formData.formItem.price = value.harga
+      this.formData.formItem.isEdited = value.is_edit ? true : false
     },
     customerChange(value) {
       this.formData.customerData.id = value.id
