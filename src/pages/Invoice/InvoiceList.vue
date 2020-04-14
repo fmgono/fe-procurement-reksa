@@ -68,11 +68,13 @@
         :loading="loading"
         loading-text="Fetching the data..."
       >
-        <template v-slot:item.actions="{}">
-          <v-btn small text color="primary">
-            <v-icon left>mdi-tray-full</v-icon>
-            <span>Print</span>
-          </v-btn>
+        <template v-slot:item.actions="{item}">
+          <router-link :to="`/invoice/print/${item.inv_seq}`" v-slot="{href, navigate}">
+            <v-btn small text color="primary" :href="href" @click="navigate" target="_blank">
+              <v-icon left>mdi-tray-full</v-icon>
+              <span>Print</span>
+            </v-btn>
+          </router-link>
         </template>
       </v-data-table>
     </v-card>
