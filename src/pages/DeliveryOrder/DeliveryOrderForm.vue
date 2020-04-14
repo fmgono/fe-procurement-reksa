@@ -20,18 +20,25 @@
         <!-- <v-card-text :class="[!dialogProcess.isSuccess ? 'd-none' : '']"></v-card-text> -->
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
-            color="red darken-1"
-            text
-            :class="[!dialogProcess.isSuccess && 'd-none']"
-            @click="dialogProcess.confirmation = false"
-          >go to list</v-btn>
-          <v-btn
-            color="primary"
-            text
-            :class="[!dialogProcess.isSuccess && 'd-none']"
-            @click="btnSureHandler"
-          >Print</v-btn>
+          <router-link to="/delivery_order" v-slot="{href, navigate}">
+            <v-btn
+              color="red darken-1"
+              text
+              :class="[!dialogProcess.isSuccess && 'd-none']"
+              :href="href"
+              @click="navigate"
+            >go to list</v-btn>
+          </router-link>
+          <router-link :to="`/delivery_order/print/${doNo}`" v-slot="{href, navigate}">
+            <v-btn
+              color="primary"
+              text
+              :href="href"
+              :class="[!dialogProcess.isSuccess && 'd-none']"
+              @click="navigate"
+              target="_blank"
+            >Print</v-btn>
+          </router-link>
           <v-btn
             color="red darken-1"
             text
@@ -280,6 +287,7 @@ export default {
       isSuccess: false,
       successMessage: ''
     },
+    doNo: '',
     isFormWrapperValid: true,
     isFormItemsValid: true,
     formData: {
@@ -494,10 +502,11 @@ export default {
           do_detail: this.formData.items
         })
         .then(resp => {
-          console.log(resp)
+          const doNo = resp.data.data_mst.do_seq
+          this.doNo = doNo
           this.dialogProcess.isLoading = false
           this.dialogProcess.isSuccess = true
-          this.dialogProcess.successMessage = `Delivery Order has been successfully created with no ${resp.data.data_mst.do_seq} !`
+          this.dialogProcess.successMessage = `Delivery Order has been successfully created with no ${this.doNo} !`
         })
         .catch(e => console.error(e))
     },
