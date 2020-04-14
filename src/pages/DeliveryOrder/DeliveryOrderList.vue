@@ -22,18 +22,25 @@
         <!-- <v-card-text :class="[!dialogProcess.isSuccess ? 'd-none' : '']"></v-card-text> -->
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
-            color="red darken-1"
-            text
-            :class="[!dialogProcess.isSuccess && 'd-none']"
-            @click="dialogProcess.confirmation = false"
-          >go to invoice</v-btn>
-          <v-btn
-            color="primary"
-            text
-            :class="[!dialogProcess.isSuccess && 'd-none']"
-            @click="btnSureHandler"
-          >Print Invoice</v-btn>
+          <router-link to="/invoice" v-slot="{href, navigate}">
+            <v-btn
+              color="red darken-1"
+              text
+              :class="[!dialogProcess.isSuccess && 'd-none']"
+              :href="href"
+              @click="navigate"
+            >go to invoice</v-btn>
+          </router-link>
+          <router-link :to="`/invoice/print/${invoiceNo}`" v-slot="{href, navigate}">
+            <v-btn
+              color="primary"
+              text
+              :class="[!dialogProcess.isSuccess && 'd-none']"
+              :href="href"
+              @click="navigate"
+              target="_blank"
+            >Print Invoice</v-btn>
+          </router-link>
           <v-btn
             color="red darken-1"
             text
@@ -122,6 +129,7 @@ export default {
         right: '55px'
       }
     },
+    invoiceNo: '',
     dialogProcess: {
       confirmation: false,
       confirmationMessage: '',
@@ -170,9 +178,11 @@ export default {
           token: token
         })
         .then(resp => {
+          const invoiceNo = resp.data.data_mst.inv_seq
+          this.invoiceNo = invoiceNo
           this.dialogProcess.isLoading = false
           this.dialogProcess.isSuccess = true
-          this.dialogProcess.responseMessage = `Invoice has been successfully created with no ${resp.data.data_mst.inv_seq} !`
+          this.dialogProcess.responseMessage = `Invoice has been successfully created with no ${this.invoiceNo} !`
         })
         .catch(() => {
           this.dialogProcess.isLoading = false
