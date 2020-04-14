@@ -76,12 +76,14 @@
           >{{checkStatus(item.flag_invoice)}}</v-chip>
         </template>
         <template v-slot:item.actions="{ item }">
-          <v-btn small text color="primary">
-            <v-icon left>mdi-tray-full</v-icon>
-            <span>Print</span>
-          </v-btn>
+          <router-link :to="`/delivery_order/print/${item.do_seq}`" v-slot="{href, navigate}">
+            <v-btn small text color="primary" :href="href" @click="navigate" target="_blank">
+              <v-icon left>mdi-tray-full</v-icon>
+              <span>Print</span>
+            </v-btn>
+          </router-link>
           <v-btn
-            :disabled="item.flag_invoice"
+            :disabled="item.flag_invoice == 1"
             small
             color="primary"
             @click="btnInvoiceHandler(item.do_seq)"
