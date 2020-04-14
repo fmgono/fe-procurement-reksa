@@ -184,6 +184,14 @@
         </v-row>
       </v-col>
     </v-row>
+    <v-row align="center" justify="center">
+      <v-col class="center-element">
+        <v-btn @click="print()" color="primary" class="d-print-none">
+          <v-icon left>mdi-tray-full</v-icon>
+          <span>Print</span>
+        </v-btn>
+      </v-col>
+    </v-row>
   </div>
 </template>
 <script>
