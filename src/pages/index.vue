@@ -39,7 +39,7 @@
     </v-app-bar>
 
     <v-content>
-      <v-container fluid>
+      <v-container fluid class="margin-wrapper">
         <router-view></router-view>
       </v-container>
     </v-content>
@@ -67,6 +67,9 @@ export default {
     handleBtnLogout() {
       localStorage.removeItem('userAuth')
       this.$router.push('/login')
+    },
+    closeNavbar() {
+      this.drawer = false
     }
   },
   watch: {
@@ -77,6 +80,19 @@ export default {
         this.menuTitle = to.meta.title
       }
     }
+  },
+  created() {
+    window.addEventListener('beforeprint', this.closeNavbar)
+  },
+  destroyed() {
+    window.removeEventListener('beforeprint', this.closeNavbar)
   }
 }
 </script>
+<style>
+@media print {
+  .margin-wrapper {
+    margin-top: -110px;
+  }
+}
+</style>
