@@ -1,6 +1,6 @@
 import Dashboard from '@/pages/Dashboard/Dashboard.vue'
 import BaseApp from '@/pages/index.vue'
-import Login from '@/pages/Login/Login.vue'
+import Login from '@/pages/Login/Form.vue'
 
 export default [
   {
@@ -25,28 +25,28 @@ export default [
       },
       {
         path: 'delivery_order',
-        component: () => import('@/pages/DeliveryOrder/DeliveryOrderList.vue'),
+        component: () => import('@/pages/DeliveryOrder/List.vue'),
         meta: {
           title: 'List Delivery Order'
         }
       },
       {
         path: 'delivery_order/add',
-        component: () => import('@/pages/DeliveryOrder/DeliveryOrderForm.vue'),
+        component: () => import('@/pages/DeliveryOrder/Form.vue'),
         meta: {
           title: 'Add Delivery Order'
         }
       },
       {
         path: 'delivery_order/print/:doNo',
-        component: () => import('@/pages/DeliveryOrder/DeliveryOrderPrint.vue'),
+        component: () => import('@/pages/DeliveryOrder/Print.vue'),
         meta: {
           title: 'Print Delivery Order'
         }
       },
       {
         path: 'invoice',
-        component: () => import('@/pages/Invoice/InvoiceList.vue'),
+        component: () => import('@/pages/Invoice/List.vue'),
         meta: {
           title: 'List Invoice'
         }
