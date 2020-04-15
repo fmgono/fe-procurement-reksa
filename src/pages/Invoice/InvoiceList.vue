@@ -2,10 +2,9 @@
   <div>
     <v-dialog max-width="600" v-model="dialogProcess.confirmation" persistent>
       <v-card>
-        <v-card-title
-          :style="style.titleCard"
-          class="headline"
-        >{{dialogProcess.confirmationMessage}}</v-card-title>
+        <v-card-title :style="style.titleCard" class="headline">{{
+          dialogProcess.confirmationMessage
+        }}</v-card-title>
         <v-card-text>
           <v-progress-linear
             :class="[!dialogProcess.isLoading ? 'd-none' : '']"
@@ -17,7 +16,8 @@
           <v-alert
             :class="[!dialogProcess.isSuccess ? 'd-none' : '']"
             :type="getStatusResponse"
-          >{{ dialogProcess.responseMessage }}</v-alert>
+            >{{ dialogProcess.responseMessage }}</v-alert
+          >
         </v-card-text>
         <!-- <v-card-text :class="[!dialogProcess.isSuccess ? 'd-none' : '']"></v-card-text> -->
         <v-card-actions>
@@ -27,25 +27,29 @@
             text
             :class="[!dialogProcess.isSuccess && 'd-none']"
             @click="dialogProcess.confirmation = false"
-          >go to invoice</v-btn>
+            >go to invoice</v-btn
+          >
           <v-btn
             color="primary"
             text
             :class="[!dialogProcess.isSuccess && 'd-none']"
             @click="btnSureHandler"
-          >Print Invoice</v-btn>
+            >Print Invoice</v-btn
+          >
           <v-btn
             color="red darken-1"
             text
             :class="[dialogProcess.isSuccess && 'd-none']"
             @click="dialogProcess.confirmation = false"
-          >No</v-btn>
+            >No</v-btn
+          >
           <v-btn
             color="primary"
             text
             :class="[dialogProcess.isSuccess && 'd-none']"
             @click="btnSureHandler"
-          >Yes</v-btn>
+            >Yes</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -68,9 +72,19 @@
         :loading="loading"
         loading-text="Fetching the data..."
       >
-        <template v-slot:item.actions="{item}">
-          <router-link :to="`/invoice/print/${item.inv_seq}`" v-slot="{href, navigate}">
-            <v-btn small text color="primary" :href="href" @click="navigate" target="_blank">
+        <template v-slot:item.actions="{ item }">
+          <router-link
+            :to="`/invoice/print/${item.inv_seq}`"
+            v-slot="{ href, navigate }"
+          >
+            <v-btn
+              small
+              text
+              color="primary"
+              :href="href"
+              @click="navigate"
+              target="_blank"
+            >
               <v-icon left>mdi-tray-full</v-icon>
               <span>Print</span>
             </v-btn>

@@ -18,7 +18,7 @@
             <div class="body-1">No PO :</div>
           </v-col>
           <v-col class="text-right">
-            <div class="body-1">{{data.po_seq}}</div>
+            <div class="body-1">{{ data.po_seq }}</div>
           </v-col>
         </v-row>
         <v-row>
@@ -26,7 +26,7 @@
             <div class="body-1">No DO :</div>
           </v-col>
           <v-col class="text-right">
-            <div class="body-1">{{data.do_seq}}</div>
+            <div class="body-1">{{ data.do_seq }}</div>
           </v-col>
         </v-row>
         <v-row>
@@ -34,7 +34,7 @@
             <div class="body-1">Tanggal :</div>
           </v-col>
           <v-col class="text-right">
-            <div class="body-1">{{data.do_date}}</div>
+            <div class="body-1">{{ data.do_date }}</div>
           </v-col>
         </v-row>
         <!-- </v-card> -->

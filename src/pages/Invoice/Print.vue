@@ -13,7 +13,7 @@
             <div class="body-1">Date</div>
           </v-col>
           <v-col class="pb-0 text-right">
-            <div class="body-1">{{data.inv_date}} 121</div>
+            <div class="body-1">{{ data.inv_date }} 121</div>
           </v-col>
           <v-spacer class="d-print-none"></v-spacer>
           <v-spacer></v-spacer>
@@ -33,7 +33,7 @@
             <div class="body-1">Invoice</div>
           </v-col>
           <v-col class="text-right">
-            <div class="body-1">{{$route.params.invNo}}</div>
+            <div class="body-1">{{ $route.params.invNo }}</div>
           </v-col>
           <v-spacer class="d-print-none"></v-spacer>
           <v-spacer></v-spacer>
@@ -43,7 +43,7 @@
             <div class="body-1">PO No</div>
           </v-col>
           <v-col class="text-right">
-            <div class="body-1">{{data.po_seq}}</div>
+            <div class="body-1">{{ data.po_seq }}</div>
           </v-col>
           <v-spacer class="d-print-none"></v-spacer>
           <v-spacer></v-spacer>
@@ -53,7 +53,7 @@
             <div class="body-1">Kwitansi No</div>
           </v-col>
           <v-col class="text-right">
-            <div class="body-1">{{data.kwitansi_seq}}</div>
+            <div class="body-1">{{ data.kwitansi_seq }}</div>
           </v-col>
           <v-spacer class="d-print-none"></v-spacer>
           <v-spacer></v-spacer>
@@ -222,7 +222,6 @@ export default {
           return item
         })
       })
-      .catch(e => console.error(e))
   }
 }
 </script>

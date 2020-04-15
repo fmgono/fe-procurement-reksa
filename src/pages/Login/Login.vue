@@ -38,7 +38,8 @@
                   :loading="btnLoading"
                   :disabled="!valid"
                   @click.prevent="handleSubmit"
-                >Login</v-btn>
+                  >Login</v-btn
+                >
               </v-card-actions>
             </v-form>
           </v-card>

@@ -7,7 +7,7 @@
           v-for="menu in menus"
           :key="menu.title"
           style="textDecoration: none"
-          v-slot="{href, route, navigate,isExactActive}"
+          v-slot="{ href, route, navigate, isExactActive }"
         >
           <v-list-item
             link
@@ -30,9 +30,9 @@
 
     <v-app-bar color="primary" dark app clipped-left class="d-print-none">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>{{menuTitle}}</v-toolbar-title>
+      <v-toolbar-title>{{ menuTitle }}</v-toolbar-title>
       <v-spacer></v-spacer>
-      <div class="subtitle-1">{{userCode}}</div>
+      <div class="subtitle-1">{{ userCode }}</div>
       <v-btn icon @click="handleBtnLogout">
         <v-icon>mdi-logout-variant</v-icon>
       </v-btn>
