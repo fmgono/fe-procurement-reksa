@@ -59,6 +59,13 @@ export default [
         }
       },
       {
+        path: 'invoice/receipt/print/',
+        component: () => import('@/pages/Invoice/ReceiptPrint.vue'),
+        meta: {
+          title: 'Print Invoice'
+        }
+      },
+      {
         path: '*',
         component: () => import('@/pages/404.vue'),
         meta: {
