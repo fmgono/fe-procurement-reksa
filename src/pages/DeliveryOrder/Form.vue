@@ -2,13 +2,11 @@
   <div>
     <v-dialog max-width="500" v-model="dialogProcess.confirmation" persistent>
       <v-card>
-        <v-card-title class="headline"
-          >Are you sure the data filled in is correct ?</v-card-title
-        >
-        <v-card-text
-          >The data that is filled in will be stored in the database and can't
-          be changed again</v-card-text
-        >
+        <v-card-title class="headline">Are you sure the data filled in is correct ?</v-card-title>
+        <v-card-text>
+          The data that is filled in will be stored in the database and can't
+          be changed again
+        </v-card-text>
         <v-card-text>
           <v-progress-linear
             :class="[!dialogProcess.isLoading ? 'd-none' : '']"
@@ -20,8 +18,7 @@
           <v-alert
             :class="[!dialogProcess.isSuccess ? 'd-none' : '']"
             type="success"
-            >{{ dialogProcess.successMessage }}</v-alert
-          >
+          >{{ dialogProcess.successMessage }}</v-alert>
         </v-card-text>
         <!-- <v-card-text :class="[!dialogProcess.isSuccess ? 'd-none' : '']"></v-card-text> -->
         <v-card-actions>
@@ -33,13 +30,9 @@
               :class="[!dialogProcess.isSuccess && 'd-none']"
               :href="href"
               @click="navigate"
-              >go to list</v-btn
-            >
+            >go to list</v-btn>
           </router-link>
-          <router-link
-            :to="`/delivery_order/print/${doNo}`"
-            v-slot="{ href, navigate }"
-          >
+          <router-link :to="`/delivery_order/print/${doNo}`" v-slot="{ href, navigate }">
             <v-btn
               color="primary"
               text
@@ -47,23 +40,20 @@
               :class="[!dialogProcess.isSuccess && 'd-none']"
               @click="navigate"
               target="_blank"
-              >Print</v-btn
-            >
+            >Print</v-btn>
           </router-link>
           <v-btn
             color="red darken-1"
             text
             :class="[dialogProcess.isSuccess && 'd-none']"
             @click="dialogProcess.confirmation = false"
-            >No, will check again</v-btn
-          >
+          >No, will check again</v-btn>
           <v-btn
             color="primary"
             text
             :class="[dialogProcess.isSuccess && 'd-none']"
             @click="btnSureHandler"
-            >Yes, I'm Sure</v-btn
-          >
+          >Yes, I'm Sure</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -182,15 +172,13 @@
                       :class="[!formData.isItemEdited && 'd-none']"
                       :disabled="!isFormItemsValid"
                       @click.prevent="editItemHandler"
-                      >Edit Item</v-btn
-                    >
+                    >Edit Item</v-btn>
                     <v-btn
                       color="secondary"
                       :class="[formData.isItemEdited && 'd-none']"
                       :disabled="!isFormItemsValid"
                       @click.prevent="addItemHandler"
-                      >Add Item</v-btn
-                    >
+                    >Add Item</v-btn>
                   </v-col>
                 </v-row>
               </v-form>
@@ -204,12 +192,8 @@
                 :hide-default-footer="true"
               >
                 <template v-slot:item.actions="{ item }">
-                  <v-icon small class="mr-2" @click="selectItemToEdit(item.id)"
-                    >mdi-pencil</v-icon
-                  >
-                  <v-icon small @click="deleteitemHandler(item.id)"
-                    >mdi-delete</v-icon
-                  >
+                  <v-icon small class="mr-2" @click="selectItemToEdit(item.id)">mdi-pencil</v-icon>
+                  <v-icon small @click="deleteitemHandler(item.id)">mdi-delete</v-icon>
                 </template>
               </v-data-table>
             </v-form>
@@ -226,9 +210,7 @@
                 <div class="body-1" :style="style.summaryStyle">Send To</div>
               </v-col>
               <v-col cols="8" class="text-right">
-                <div class="body-1" :style="style.summaryStyle">
-                  {{ formData.customerData.name }}
-                </div>
+                <div class="body-1" :style="style.summaryStyle">{{ formData.customerData.name }}</div>
               </v-col>
             </v-row>
             <v-row>
@@ -236,9 +218,7 @@
                 <div class="body-1" :style="style.summaryStyle">PO No</div>
               </v-col>
               <v-col cols="8" class="text-right">
-                <div class="body-1" :style="style.summaryStyle">
-                  {{ `#${formData.poNumber}` }}
-                </div>
+                <div class="body-1" :style="style.summaryStyle">{{ `#${formData.poNumber}` }}</div>
               </v-col>
             </v-row>
             <v-row>
@@ -246,9 +226,7 @@
                 <div class="body-1" :style="style.summaryStyle">DO Date</div>
               </v-col>
               <v-col cols="8" class="text-right">
-                <div class="body-1" :style="style.summaryStyle">
-                  {{ formData.deliveryDate }}
-                </div>
+                <div class="body-1" :style="style.summaryStyle">{{ formData.deliveryDate }}</div>
               </v-col>
             </v-row>
             <v-row>
@@ -256,21 +234,18 @@
                 <div class="body-1" :style="style.summaryStyle">Total Qty</div>
               </v-col>
               <v-col cols="8" class="text-right">
-                <div class="body-1" :style="style.summaryStyle">
-                  {{ formData.summary.totalQty }}
-                </div>
+                <div class="body-1" :style="style.summaryStyle">{{ formData.summary.totalQty }}</div>
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="4" class="pb-0">
-                <div class="body-1" :style="style.summaryStyle">
-                  Total Price
-                </div>
+                <div class="body-1" :style="style.summaryStyle">Total Price</div>
               </v-col>
               <v-col cols="8" class="text-right">
-                <div class="body-1" :style="style.summaryStyle">
-                  {{ formData.summary.totalPriceCurrency }}
-                </div>
+                <div
+                  class="body-1"
+                  :style="style.summaryStyle"
+                >{{ formData.summary.totalPriceCurrency }}</div>
               </v-col>
             </v-row>
             <v-row align-content="stretch">
@@ -279,8 +254,7 @@
                   color="primary"
                   :disabled="!isFormWrapperValid"
                   @click.prevent="dialogProcess.confirmation = true"
-                  >Create Delivery Order</v-btn
-                >
+                >Create Delivery Order</v-btn>
               </v-col>
             </v-row>
           </v-container>
@@ -396,6 +370,23 @@ export default {
       .get(`${process.env.VUE_APP_BASE_API_URL}api/item/show?token=${token}`)
       .then(resp => {
         this.formData.autoCompleteItems = resp.data
+      })
+      .catch(e => console.error(e))
+
+    axios
+      .get(`${process.env.VUE_APP_BASE_API_URL}api/cust/show?token=${token}`)
+      .then(resp => {
+        const customers = resp.data.map(customer => {
+          customer.name = customer.store_name
+          customer.information = `${customer.store_address}
+${customer.store_city}
+${customer.rgm_cug}
+          `
+          return customer
+        })
+        console.log(customers)
+
+        this.formData.autoCompleteCust = customers
       })
       .catch(e => console.error(e))
   },
