@@ -59,7 +59,11 @@ export default {
     userCode: user_code || '',
     menus: [
       { title: 'Dashboard', icon: 'mdi-view-dashboard-outline', link: '/' },
-      { title: 'Delivery Order', icon: 'receipt', link: '/delivery_order' },
+      {
+        title: 'Delivery Order',
+        icon: 'mdi-truck-delivery-outline',
+        link: '/delivery_order'
+      },
       { title: 'Invoice', icon: 'receipt', link: '/invoice' }
     ]
   }),

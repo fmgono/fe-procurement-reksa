@@ -79,7 +79,7 @@
                 auto-grow
                 disabled
                 rows="1"
-                prepend-icon="domain"
+                prepend-icon="mdi-information-outline"
                 outlined
                 :value="formData.customerData.information"
                 label="Customer Information"
@@ -89,7 +89,7 @@
               <v-text-field
                 outlined
                 :rules="[v => !!v || 'PO Number is required']"
-                prepend-icon="domain"
+                prepend-icon="mdi-text-box-multiple-outline"
                 label="PO No"
                 placeholder="32304010"
                 v-model="formData.poNumber"
