@@ -340,26 +340,7 @@ export default {
         price: 0,
         isEdited: true
       },
-      autoCompleteCust: [
-        {
-          name: 'PT Rekso Nasional',
-          id: 1,
-          information:
-            'Jl. AMD X No 10 \n Jakarta Timur, Indonesia.\n 082112345678'
-        },
-        {
-          name: 'PT Mc. Donald',
-          id: 2,
-          information:
-            'Jl. AMD X No 10 \n Jakarta Timur, Indonesia.\n 082112345678'
-        },
-        {
-          name: 'PT KFC',
-          id: 3,
-          information:
-            'Jl. AMD X No 10 \n Jakarta Timur, Indonesia.\n 082112345678'
-        }
-      ],
+      autoCompleteCust: [],
       autoCompleteItems: []
     },
     menuDatePicker: false,
@@ -377,7 +358,7 @@ export default {
       .get(`${process.env.VUE_APP_BASE_API_URL}api/cust/show?token=${token}`)
       .then(resp => {
         const customers = resp.data.map(customer => {
-          customer.name = customer.store_name
+          customer.name = `${customer.store_name} - ${customer.store_address}`
           customer.information = `${customer.store_address}
 ${customer.store_city}
 ${customer.rgm_cug}
