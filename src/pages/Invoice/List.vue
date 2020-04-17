@@ -144,7 +144,7 @@ export default {
         this.items = editedData
         this.loading = false
       })
-      .catch(e => console.log(e))
+      .catch(() => (this.loading = false))
   },
   methods: {
     btnSureHandler() {
