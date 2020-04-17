@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="print-invoice">
     <v-row>
       <v-col class="pb-0 center-element">
         <v-card-title>INVOICE</v-card-title>
@@ -10,50 +10,50 @@
         <!-- <v-card outlined tile> -->
         <v-row>
           <v-col class="pb-0" cols="3">
-            <div class="body-1">Date</div>
+            <div class="body-2">Date</div>
           </v-col>
           <v-col class="pb-0 text-right">
-            <div class="body-1">{{ data.inv_date }} 121</div>
+            <div class="body-2">{{ data.inv_date }} 121</div>
           </v-col>
           <v-spacer class="d-print-none"></v-spacer>
           <v-spacer></v-spacer>
         </v-row>
         <v-row>
-          <v-col class="pb-0" cols="3">
-            <div class="body-1">Company ID</div>
+          <v-col class="pb-0 pt-0" cols="3">
+            <div class="body-2">Company ID</div>
           </v-col>
-          <v-col class="text-right">
-            <div class="body-1 font-weight-bold">PT Rekso Nasional Food</div>
-          </v-col>
-          <v-spacer class="d-print-none"></v-spacer>
-          <v-spacer></v-spacer>
-        </v-row>
-        <v-row>
-          <v-col class="pb-0" cols="3">
-            <div class="body-1">Invoice</div>
-          </v-col>
-          <v-col class="text-right">
-            <div class="body-1">{{ $route.params.invNo }}</div>
+          <v-col class="text-right pt-0">
+            <div class="body-2 font-weight-bold">PT Rekso Nasional Food</div>
           </v-col>
           <v-spacer class="d-print-none"></v-spacer>
           <v-spacer></v-spacer>
         </v-row>
         <v-row>
-          <v-col class="pb-0" cols="3">
-            <div class="body-1">PO No</div>
+          <v-col class="pb-0 pt-0" cols="3">
+            <div class="body-2">Invoice</div>
           </v-col>
-          <v-col class="text-right">
-            <div class="body-1">{{ data.po_seq }}</div>
+          <v-col class="text-right pt-0">
+            <div class="body-2">{{ $route.params.invNo }}</div>
           </v-col>
           <v-spacer class="d-print-none"></v-spacer>
           <v-spacer></v-spacer>
         </v-row>
         <v-row>
-          <v-col class="pb-0" cols="3">
-            <div class="body-1">Kwitansi No</div>
+          <v-col class="pb-0 pt-0" cols="3">
+            <div class="body-2">PO No</div>
           </v-col>
-          <v-col class="text-right">
-            <div class="body-1">{{ data.kwitansi_seq }}</div>
+          <v-col class="text-right pt-0">
+            <div class="body-2">{{ data.po_seq }}</div>
+          </v-col>
+          <v-spacer class="d-print-none"></v-spacer>
+          <v-spacer></v-spacer>
+        </v-row>
+        <v-row>
+          <v-col class="pb-0 pt-0" cols="3">
+            <div class="body-2">Kwitansi No</div>
+          </v-col>
+          <v-col class="text-right pt-0">
+            <div class="body-2">{{ data.kwitansi_seq }}</div>
           </v-col>
           <v-spacer class="d-print-none"></v-spacer>
           <v-spacer></v-spacer>
@@ -66,32 +66,32 @@
         <!-- <v-card outlined tile> -->
         <v-row>
           <v-col class="pb-0">
-            <div class="body-1">Bill To</div>
+            <div class="body-2">Bill To</div>
           </v-col>
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-1">
-            <div class="body-1 font-weight-bold">PT Rekso Nasional Food</div>
+            <div class="body-2 font-weight-bold">PT Rekso Nasional Food</div>
           </v-col>
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-1">
-            <div class="body-1">Graha Rekso Building 5th Floor</div>
+            <div class="body-2">Graha Rekso Building 5th Floor</div>
           </v-col>
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-1">
-            <div class="body-1">Jl. Bulevar Artha Gading Kav. A1</div>
+            <div class="body-2">Jl. Bulevar Artha Gading Kav. A1</div>
           </v-col>
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-1">
-            <div class="body-1">Sentra Bisnis Artha Gading</div>
+            <div class="body-2">Sentra Bisnis Artha Gading</div>
           </v-col>
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-1">
-            <div class="body-1">Jakarta Utara 14240</div>
+            <div class="body-2">Jakarta Utara 14240</div>
           </v-col>
         </v-row>
         <!-- </v-card> -->
@@ -104,8 +104,8 @@
             <th>No</th>
             <th>Code - Name Item</th>
             <th>Qty</th>
-            <th>Unit Price</th>
-            <th>Total</th>
+            <th class="text-right">Unit Price</th>
+            <th class="text-right">Total</th>
           </tr>
         </thead>
         <tbody>
@@ -113,18 +113,21 @@
             <td>{{ item.inv_rownum }}</td>
             <td>{{ item.inv_itemid }}</td>
             <td>{{ item.inv_qty }}</td>
-            <td>{{ item.inv_cost }}</td>
-            <td>{{ item.total_cost }}</td>
+            <td class="text-right">{{ item.inv_cost }}</td>
+            <td class="text-right">{{ item.total_cost }}</td>
           </tr>
         </tbody>
         <tfoot>
           <tr>
-            <th colspan="4">Grandtotal</th>
-            <th>Rp. 128.000,00</th>
+            <td colspan="4" class="subtitle-2">Grandtotal</td>
+            <td class="subtitle-2 text-right">{{data.total_cost}}</td>
           </tr>
           <tr>
-            <th colspan="1">Terbilang</th>
-            <th colspan="4">Seratus dua puluh juta rupiah</th>
+            <td colspan="2" class="text-center body-2 font-weight-bold">Terbilang</td>
+            <td
+              colspan="3"
+              class="capitalize text-right body-2 font-weight-bold font-italic"
+            >{{data.terbilang}}</td>
           </tr>
         </tfoot>
       </template>
@@ -135,32 +138,32 @@
         <!-- <v-card outlined tile> -->
         <v-row>
           <v-col class="pb-0">
-            <div class="body-1 font-weight-bold underline">Notes :</div>
+            <div class="body-2 font-weight-bold underline">Notes :</div>
           </v-col>
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-1">
-            <div class="body-1">Jatuh Tempo Pembayaran</div>
+            <div class="body-2">Jatuh Tempo Pembayaran</div>
           </v-col>
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-1">
-            <div class="body-1">Setelah Invoice diterbitkan, dan harap transfer ke:</div>
+            <div class="body-2">Setelah Invoice diterbitkan, dan harap transfer ke:</div>
           </v-col>
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-1">
-            <div class="body-1 font-weight-bold">CV. Bandar Elektronik</div>
+            <div class="body-2 font-weight-bold">CV. Bandar Elektronik</div>
           </v-col>
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-1">
-            <div class="body-1 font-weight-bold">Bank Mega KCP Indomobil MT. Haryono</div>
+            <div class="body-2 font-weight-bold">Bank Mega KCP Indomobil MT. Haryono</div>
           </v-col>
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-1">
-            <div class="body-1 font-weight-bold">No. Rek: 01-133-00-11-77777-0</div>
+            <div class="body-2 font-weight-bold">No. Rek: 01-133-00-11-77777-0</div>
           </v-col>
         </v-row>
         <!-- </v-card> -->
@@ -168,18 +171,18 @@
     </v-row>
     <v-row>
       <v-col>
-        <div class="body-1">&nbsp;</div>
-        <!-- <div class="body-1 font-weight-bold">SHAHRIAL</div> -->
+        <div class="body-2">&nbsp;</div>
+        <!-- <div class="body-2 font-weight-bold">SHAHRIAL</div> -->
       </v-col>
       <v-col>
         <v-row>
           <v-col class="pb-10">
-            <div class="body-1 text-center">Hormat Kami,</div>
+            <div class="body-2 text-center">Hormat Kami,</div>
           </v-col>
         </v-row>
         <v-row>
           <v-col class="pt-10">
-            <div class="body-1 text-center font-weight-bold">SHAHRIAL</div>
+            <div class="body-2 text-center font-weight-bold">SHAHRIAL</div>
           </v-col>
         </v-row>
       </v-col>
@@ -216,6 +219,9 @@ export default {
       })
       .then(resp => {
         this.data = resp.data.data
+        this.data.total_cost = `Rp. ${this.data.total_cost.toLocaleString(
+          'id'
+        )}`
         this.data.inv_detail = this.data.inv_detail.map(item => {
           item.inv_cost = `Rp. ${item.inv_cost.toLocaleString('id')}`
           item.total_cost = `Rp. ${item.total_cost.toLocaleString('id')}`
@@ -226,6 +232,10 @@ export default {
 }
 </script>
 <style scoped>
+.print-invoice {
+  font-size: ;
+}
+
 .table-print {
   border: thin solid rgba(0, 0, 0, 0.12);
 }
@@ -239,6 +249,10 @@ export default {
 .assignment {
   display: flex;
   justify-content: center;
+}
+
+.capitalize {
+  text-transform: capitalize;
 }
 
 .underline {
