@@ -22,7 +22,7 @@
           <v-col class="pb-0 pt-0" cols="3">
             <div class="body-2">Company ID</div>
           </v-col>
-          <v-col class="text-right pt-0">
+          <v-col class="text-right pt-0 pb-0">
             <div class="body-2 font-weight-bold">PT Rekso Nasional Food</div>
           </v-col>
           <v-spacer class="d-print-none"></v-spacer>
@@ -32,7 +32,7 @@
           <v-col class="pb-0 pt-0" cols="3">
             <div class="body-2">Invoice</div>
           </v-col>
-          <v-col class="text-right pt-0">
+          <v-col class="text-right pt-0 pb-0">
             <div class="body-2">{{ $route.params.invNo }}</div>
           </v-col>
           <v-spacer class="d-print-none"></v-spacer>
@@ -42,7 +42,7 @@
           <v-col class="pb-0 pt-0" cols="3">
             <div class="body-2">PO No</div>
           </v-col>
-          <v-col class="text-right pt-0">
+          <v-col class="text-right pt-0 pb-0">
             <div class="body-2">{{ data.po_seq }}</div>
           </v-col>
           <v-spacer class="d-print-none"></v-spacer>
@@ -111,7 +111,7 @@
         <tbody>
           <tr v-for="item in data.inv_detail" :key="item.inv_rownum">
             <td>{{ item.inv_rownum }}</td>
-            <td>{{ item.inv_itemid }}</td>
+            <td>{{ item.inv_itemid }} - {{ item.deskripsi_barang }}</td>
             <td>{{ item.inv_qty }}</td>
             <td class="text-right">{{ item.inv_cost }}</td>
             <td class="text-right">{{ item.total_cost }}</td>
