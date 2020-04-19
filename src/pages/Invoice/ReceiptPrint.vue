@@ -48,17 +48,17 @@
             <th>Jumlah</th>
             <th>Nama Store</th>
           </tr>
-          <tr>
-            <td>1</td>
-            <td>484797</td>
-            <td>20761/BE-INV/II/2020</td>
-            <td>2470000</td>
-            <td>PONDOK INDAH MALL I</td>
+          <tr v-for="inv in data" :key="inv.inv_seq">
+            <td>{{inv.no}}</td>
+            <td>{{inv.po_seq}}</td>
+            <td>{{inv.inv_seq}}</td>
+            <td>{{inv.total_cost}}</td>
+            <td>{{inv.inv_custid}}</td>
           </tr>
           <tr>
             <td colspan="3">Jumlah</td>
             <td>2470000</td>
-            <td>&nbsp;`</td>
+            <td>&nbsp;</td>
           </tr>
           <tr>
             <td colspan="5">&nbsp;</td>
@@ -74,33 +74,46 @@
   </div>
 </template>
 <script>
-// import axios from 'axios'
+import XLSX from 'xlsx'
+import axios from 'axios'
 
-// const { token } = JSON.parse(localStorage.getItem('userAuth'))
+const { token } = JSON.parse(localStorage.getItem('userAuth'))
 
 export default {
   data: () => ({
-    uri: 'data:application/vnd.ms-excel;base64,',
-    template:
-      '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
-    base64: function(s) {
-      return window.btoa(unescape(encodeURIComponent(s)))
-    },
-    format: function(s, c) {
-      return s.replace(/{(\w+)}/g, function(m, p) {
-        return c[p]
-      })
-    }
+    data: {}
   }),
+  created() {
+    axios
+      .post(`${process.env.VUE_APP_BASE_API_URL}api/invoice/invoice_excel`, {
+        date_from: '2020-04-13',
+        date_to: '2020-04-14',
+        token
+      })
+      .then(resp => {
+        let orderNo = 0
+        const data = resp.data.data.map(inv => {
+          orderNo++
+          inv.no = orderNo
+          inv.total_cost = inv.total_cost.toLocaleString('id')
+          return inv
+        })
+        this.data = data
+      })
+      .catch(e => console.error(e))
+  },
+  mounted() {
+    const tableEl = document.querySelector('table')
+    tableEl.id = 'table'
+  },
   methods: {
     print() {
       window.print()
     },
-    exportToExcel(table, name) {
-      if (!table.nodeType) table = this.$refs.table
-      var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
-      window.location.href =
-        this.uri + this.base64(this.format(this.template, ctx))
+    exportToExcel() {
+      const table = document.getElementById('table')
+      const wb = XLSX.utils.table_to_book(table)
+      return XLSX.writeFile(wb, 'Invoice Receipt.xls')
     }
   }
 }
