@@ -48,24 +48,51 @@
             <th>Jumlah</th>
             <th>Nama Store</th>
           </tr>
-          <tr v-for="inv in data" :key="inv.inv_seq">
-            <td>{{inv.no}}</td>
+          <tr v-for="inv in data.data" :key="inv.inv_seq">
+            <td>{{inv.rownum}}</td>
             <td>{{inv.po_seq}}</td>
             <td>{{inv.inv_seq}}</td>
-            <td>{{inv.total_cost}}</td>
+            <td class="text-right">{{inv.total_cost}}</td>
             <td>{{inv.inv_custid}}</td>
           </tr>
           <tr>
             <td colspan="3">Jumlah</td>
-            <td>2470000</td>
+            <td class="text-right">{{data.total_cost_inv}}</td>
             <td>&nbsp;</td>
           </tr>
           <tr>
             <td colspan="5">&nbsp;</td>
           </tr>
           <tr>
-            <td colspan="2">Jakarta, 15 Feb 2020</td>
+            <td colspan="2">Jakarta, {{dateNow}}</td>
             <td colspan="3">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="3">Diketahui</td>
+            <td colspan="2">Penerima</td>
+          </tr>
+          <tr>
+            <td colspan="5">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="5">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="5">&nbsp;</td>
+          </tr>
+          <tr>
+            <td>Nama :</td>
+            <td>&nbsp;</td>
+            <td>Nama :</td>
+            <td>Nama :</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>Tanggal :</td>
+            <td>{{dateFormat}}</td>
+            <td>Tanggal :</td>
+            <td>Tanggal :</td>
+            <td>&nbsp;</td>
           </tr>
         </tbody>
       </template>
@@ -86,19 +113,17 @@ export default {
   created() {
     axios
       .post(`${process.env.VUE_APP_BASE_API_URL}api/invoice/invoice_excel`, {
-        date_from: '2020-04-13',
-        date_to: '2020-04-14',
+        date_from: this.$route.query.dateFrom,
+        date_to: this.$route.query.dateTo,
         token
       })
       .then(resp => {
-        let orderNo = 0
-        const data = resp.data.data.map(inv => {
-          orderNo++
-          inv.no = orderNo
+        resp.data.data = resp.data.data.map(inv => {
           inv.total_cost = inv.total_cost.toLocaleString('id')
           return inv
         })
-        this.data = data
+        resp.data.total_cost_inv = resp.data.total_cost_inv.toLocaleString('id')
+        this.data = resp.data
       })
       .catch(e => console.error(e))
   },
@@ -114,6 +139,24 @@ export default {
       const table = document.getElementById('table')
       const wb = XLSX.utils.table_to_book(table)
       return XLSX.writeFile(wb, 'Invoice Receipt.xls')
+    }
+  },
+  computed: {
+    dateNow() {
+      const currentTime = new Date()
+      const date = currentTime.getDate()
+      const month = currentTime.toLocaleString('id', { month: 'long' })
+      const year = currentTime.getFullYear()
+
+      return `${date} ${month} ${year}`
+    },
+    dateFormat() {
+      const currentTime = new Date()
+      const date = currentTime.getDate()
+      const month = currentTime.getMonth()
+      const year = currentTime.getFullYear()
+
+      return `${date}/${month}/${year}`
     }
   }
 }

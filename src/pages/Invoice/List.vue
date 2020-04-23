@@ -2,51 +2,74 @@
   <div>
     <v-dialog max-width="600" v-model="dialogProcess.confirmation" persistent>
       <v-card>
-        <v-card-title :style="style.titleCard" class="headline">
-          {{
-          dialogProcess.confirmationMessage
-          }}
-        </v-card-title>
+        <v-card-title :style="style.titleCard" class="headline">Print Receipt Note</v-card-title>
         <v-card-text>
-          <v-progress-linear
-            :class="[!dialogProcess.isLoading ? 'd-none' : '']"
-            color="primary"
-            indeterminate
-            rounded
-            height="6"
-          ></v-progress-linear>
-          <v-alert
-            :class="[!dialogProcess.isSuccess ? 'd-none' : '']"
-            :type="getStatusResponse"
-          >{{ dialogProcess.responseMessage }}</v-alert>
+          <v-menu
+            v-model="formReceiptNote.menuDatePickerFrom"
+            :close-on-content-click="false"
+            :nudge-right="40"
+            transition="scale-transition"
+            offset-y
+            max-width="290px"
+            min-width="290px"
+          >
+            <template v-slot:activator="{ on }">
+              <v-text-field
+                :rules="[v => !!v || 'Date From is required']"
+                label="Date From"
+                prepend-icon="event"
+                readonly
+                :value="formatDateFrom"
+                v-on="on"
+                placeholder="Ex: 30-03-2020"
+              ></v-text-field>
+            </template>
+            <v-date-picker
+              title="Date From"
+              locale="en-in"
+              v-model="formReceiptNote.dateFrom"
+              no-title
+              @input="formReceiptNote.menuDatePickerFrom = false"
+              @change="datePickerFromChange"
+            ></v-date-picker>
+          </v-menu>
+          <v-menu
+            v-model="formReceiptNote.menuDatePickerto"
+            :close-on-content-click="false"
+            :nudge-right="40"
+            transition="scale-transition"
+            offset-y
+            max-width="290px"
+            min-width="290px"
+          >
+            <template v-slot:activator="{ on }">
+              <v-text-field
+                :rules="[v => !!v || 'Date to is required']"
+                label="Date to"
+                prepend-icon="event"
+                readonly
+                :value="formatDateTo"
+                v-on="on"
+                placeholder="Ex: 30-03-2020"
+              ></v-text-field>
+            </template>
+            <v-date-picker
+              title="Date To"
+              locale="en-in"
+              v-model="formReceiptNote.dateTo"
+              no-title
+              @input="formReceiptNote.menuDatePickerTo = false"
+              @change="datePickerToChange"
+            ></v-date-picker>
+          </v-menu>
         </v-card-text>
         <!-- <v-card-text :class="[!dialogProcess.isSuccess ? 'd-none' : '']"></v-card-text> -->
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
-            color="red darken-1"
-            text
-            :class="[!dialogProcess.isSuccess && 'd-none']"
-            @click="dialogProcess.confirmation = false"
-          >go to invoice</v-btn>
-          <v-btn
-            color="primary"
-            text
-            :class="[!dialogProcess.isSuccess && 'd-none']"
-            @click="btnSureHandler"
-          >Print Invoice</v-btn>
-          <v-btn
-            color="red darken-1"
-            text
-            :class="[dialogProcess.isSuccess && 'd-none']"
-            @click="dialogProcess.confirmation = false"
-          >No</v-btn>
-          <v-btn
-            color="primary"
-            text
-            :class="[dialogProcess.isSuccess && 'd-none']"
-            @click="btnSureHandler"
-          >Yes</v-btn>
+          <v-btn color="red darken-1" text @click="dialogProcess.confirmation = false">Cancel</v-btn>
+          <router-link :to="navigateLink" v-slot="{ href, navigate }">
+            <v-btn color="primary" text :href="href" @click="navigate" target="_blank">Print</v-btn>
+          </router-link>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -83,7 +106,7 @@
           </router-link>
         </template>
       </v-data-table>
-      <v-btn rounded color="primary" class="fixed-btn">
+      <v-btn rounded color="primary" class="fixed-btn" @click="dialogProcess.confirmation = true">
         <v-icon left>mdi-text-box-plus-outline</v-icon>
         <span>Receipt Note</span>
       </v-btn>
@@ -100,6 +123,14 @@ export default {
     search: '',
     selectedDo: '',
     loading: true,
+    formReceiptNote: {
+      dateFrom: null,
+      dateTo: null,
+      invoiceDateFrom: '',
+      invoiceDateTo: '',
+      menuDatePickerFrom: false,
+      menuDatePickerTo: false
+    },
     style: {
       titleCard: {
         wordBreak: 'break-word'
@@ -111,7 +142,7 @@ export default {
       }
     },
     dialogProcess: {
-      confirmation: false,
+      confirmation: true,
       confirmationMessage: '',
       isBtnDisabled: false,
       isLoading: false,
@@ -170,11 +201,44 @@ export default {
       this.selectedDo = doNo
       this.dialogProcess.confirmation = true
       this.dialogProcess.confirmationMessage = `Are you sure want to process ${doNo} to Invoice ?`
+    },
+    datePickerFromChange(date) {
+      this.formReceiptNote.invoiceDateFrom = this.formatDate(date)
+    },
+    datePickerToChange(date) {
+      this.formReceiptNote.invoiceDateTo = this.formatDate(date)
+    },
+    formatDate(date) {
+      if (!date) return null
+
+      const [year, month, day] = date.split('-')
+      return `${year}-${month}-${day}`
+    },
+    parseDate(date) {
+      if (!date) return null
+
+      const [month, day, year] = date.split('-')
+      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
     }
   },
   computed: {
     getStatusResponse() {
       return this.dialogProcess.isFailed ? 'error' : 'success'
+    },
+    formatDateFrom() {
+      return this.formatDate(this.formReceiptNote.dateFrom)
+    },
+    formatDateTo() {
+      return this.formatDate(this.formReceiptNote.dateTo)
+    },
+    navigateLink() {
+      return {
+        path: 'invoice/receipt/print',
+        query: {
+          dateFrom: this.formReceiptNote.invoiceDateFrom,
+          dateTo: this.formReceiptNote.invoiceDateTo
+        }
+      }
     }
   }
 }
