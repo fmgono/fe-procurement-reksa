@@ -52,6 +52,39 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-dialog max-width="600" v-model="dialogProcess.deleteConfirmation" persistent>
+      <v-card>
+        <v-card-title class="headline">Are You Sure want to delete this Item ?</v-card-title>
+        <v-card-text>
+          <v-progress-linear
+            :class="[!dialogProcess.isLoading ? 'd-none' : '']"
+            color="primary"
+            indeterminate
+            rounded
+            height="6"
+          ></v-progress-linear>
+          <v-alert
+            :class="[!dialogProcess.isSuccess ? 'd-none' : '']"
+            :type="getStatusResponse"
+          >{{ dialogProcess.responseMessage }}</v-alert>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            :disabled="dialogProcess.isBtnDisabled"
+            color="red darken-1"
+            text
+            @click="closeModal"
+          >Back To List</v-btn>
+          <v-btn
+            :disabled="dialogProcess.isSuccess"
+            color="primary"
+            text
+            @click.once="deleteItemHandler"
+          >Yes</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-card>
       <v-card-title>
         Master Data Items
@@ -75,9 +108,13 @@
           <v-chip small :color="getColorBg(item.is_active)" dark>{{ checkStatus(item.is_active) }}</v-chip>
         </template>
         <template v-slot:item.actions="{ item }">
-          <v-btn small text color="primary" @click="selectEditedItem(item.kode)">
+          <v-btn small text color="primary" @click="selectItemToEdit(item.kode)">
             <v-icon left>mdi-pencil-outline</v-icon>
             <span>Edit</span>
+          </v-btn>
+          <v-btn small text color="red" @click="selectItemToDelete(item.kode)">
+            <v-icon left>mdi-delete</v-icon>
+            <span>delete</span>
           </v-btn>
         </template>
       </v-data-table>
@@ -94,6 +131,7 @@ const { token } = JSON.parse(localStorage.getItem('userAuth'))
 
 export default {
   data: () => ({
+    search: '',
     selectedItem: '',
     formItem: {
       code: '',
@@ -103,6 +141,7 @@ export default {
     },
     dialogProcess: {
       confirmation: false,
+      deleteConfirmation: false,
       confirmationMessage: '',
       isBtnDisabled: false,
       isUpdate: false,
@@ -155,15 +194,41 @@ export default {
           this.dialogProcess.responseMessage = `Oops! Something error`
         })
     },
+    deleteItemHandler() {
+      this.dialogProcess.deleteConfirmation = true
+      this.dialogProcess.isLoading = true
+      this.dialogProcess.isBtnDisabled = true
+
+      axios
+        .post(`${process.env.VUE_APP_BASE_API_URL}api/item/delete`, {
+          kode: this.selectedItem,
+          token: token
+        })
+        .then(() => {
+          this.dialogProcess.isLoading = false
+          this.dialogProcess.isBtnDisabled = false
+          this.dialogProcess.isSuccess = true
+          this.dialogProcess.responseMessage =
+            'Item has been successfully deleted!'
+        })
+        .catch(() => {
+          this.dialogProcess.isLoading = false
+          this.dialogProcess.isLoading = false
+          this.dialogProcess.isUpdate = false
+          this.dialogProcess.isFailed = true
+          this.dialogProcess.responseMessage = `Oops! Something error`
+        })
+    },
     closeModal() {
       this.dialogProcess.confirmation = false
+      this.dialogProcess.deleteConfirmation = false
       this.dialogProcess.isSuccess = false
       this.dialogProcess.isFailed = false
       this.dialogProcess.isUpdate = false
       this.dialogProcess.responseMessage = ''
       this.fetchList()
     },
-    selectEditedItem(selectedItem) {
+    selectItemToEdit(selectedItem) {
       this.dialogProcess.isUpdate = true
 
       const filteredItem = this.items.find(item => item.kode == selectedItem)
@@ -172,6 +237,10 @@ export default {
       this.formItem.measurement = filteredItem.satuan
       this.formItem.price = filteredItem.harga
       this.dialogProcess.confirmation = true
+    },
+    selectItemToDelete(selectedItem) {
+      this.selectedItem = selectedItem
+      this.dialogProcess.deleteConfirmation = true
     },
     fetchList() {
       this.loading = true
