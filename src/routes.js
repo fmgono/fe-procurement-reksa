@@ -24,6 +24,13 @@ export default [
         }
       },
       {
+        path: 'mst_items',
+        component: () => import('@/pages/MstItems/List.vue'),
+        meta: {
+          title: 'List Items'
+        }
+      },
+      {
         path: 'delivery_order',
         component: () => import('@/pages/DeliveryOrder/List.vue'),
         meta: {
