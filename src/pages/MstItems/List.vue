@@ -2,7 +2,7 @@
   <div>
     <v-dialog max-width="600" v-model="dialogProcess.confirmation" persistent>
       <v-card>
-        <v-card-title class="headline">Create Item</v-card-title>
+        <v-card-title class="headline">{{dialogProcess.isUpdate ? 'Update' : 'Create'}} Item</v-card-title>
         <v-card-text>
           <v-text-field
             :rules="[v => !!v || 'Item Description is required']"
@@ -13,7 +13,7 @@
           <v-text-field
             :rules="[v => !!v || 'Item Measurement is required']"
             label="Item Measurement"
-            placeholder="2"
+            placeholder="UNIT"
             v-model="formItem.measurement"
           ></v-text-field>
           <v-text-field
@@ -48,7 +48,7 @@
             color="primary"
             text
             @click.once="createItemHandler"
-          >Create Item</v-btn>
+          >{{dialogProcess.isUpdate ? 'Update' : 'Create'}} Item</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -74,8 +74,8 @@
         <template v-slot:item.status="{ item }">
           <v-chip small :color="getColorBg(item.is_active)" dark>{{ checkStatus(item.is_active) }}</v-chip>
         </template>
-        <template v-slot:item.actions="{}">
-          <v-btn small text color="primary">
+        <template v-slot:item.actions="{ item }">
+          <v-btn small text color="primary" @click="selectEditedItem(item.kode)">
             <v-icon left>mdi-pencil-outline</v-icon>
             <span>Edit</span>
           </v-btn>
@@ -94,37 +94,27 @@ const { token } = JSON.parse(localStorage.getItem('userAuth'))
 
 export default {
   data: () => ({
-    search: '',
     selectedItem: '',
-    loading: true,
-    style: {
-      titleCard: {
-        wordBreak: 'break-word'
-      },
-      btnAddStyle: {
-        position: 'fixed',
-        bottom: '40px',
-        right: '55px'
-      }
-    },
     formItem: {
+      code: '',
       description: '',
       measurement: 'Unit',
       price: 0
     },
     dialogProcess: {
-      confirmation: true,
+      confirmation: false,
       confirmationMessage: '',
       isBtnDisabled: false,
+      isUpdate: false,
       isLoading: false,
       isSuccess: false,
       isFailed: false,
       responseMessage: ''
     },
     headers: [
-      { text: 'Code - Item Name', value: 'codename_item' },
+      { text: 'Code - Name Item', value: 'codename_item' },
       { text: 'Measurement', value: 'satuan' },
-      { text: 'Price', value: 'harga' },
+      { text: 'Price', value: 'formattedHarga' },
       { text: 'Status', value: 'status' },
       { text: 'Actions', value: 'actions', sortable: false, align: 'center' }
     ],
@@ -137,9 +127,13 @@ export default {
     createItemHandler() {
       this.dialogProcess.isLoading = true
       this.dialogProcess.isBtnDisabled = true
+      const url = this.dialogProcess.isUpdate
+        ? 'api/item/update'
+        : 'api/item/insert'
 
       axios
-        .post(`${process.env.VUE_APP_BASE_API_URL}api/item/insert`, {
+        .post(`${process.env.VUE_APP_BASE_API_URL}${url}`, {
+          kode: this.formItem.code,
           deskripsi_barang: this.formItem.description,
           satuan: this.formItem.measurement,
           harga: this.formItem.price,
@@ -149,11 +143,14 @@ export default {
           this.dialogProcess.isLoading = false
           this.dialogProcess.isBtnDisabled = false
           this.dialogProcess.isSuccess = true
-          this.dialogProcess.responseMessage = `Item has been successfully created with no ${resp.data.data.kode} - ${resp.data.data.deskripsi_barang} !`
+          this.dialogProcess.responseMessage = this.dialogProcess.isUpdate
+            ? 'Item has been successfully changed!'
+            : `Item has been successfully created with no ${resp.data.data.kode} - ${resp.data.data.deskripsi_barang} !`
         })
         .catch(() => {
           this.dialogProcess.isLoading = false
           this.dialogProcess.isLoading = false
+          this.dialogProcess.isUpdate = false
           this.dialogProcess.isFailed = true
           this.dialogProcess.responseMessage = `Oops! Something error`
         })
@@ -162,8 +159,19 @@ export default {
       this.dialogProcess.confirmation = false
       this.dialogProcess.isSuccess = false
       this.dialogProcess.isFailed = false
+      this.dialogProcess.isUpdate = false
       this.dialogProcess.responseMessage = ''
       this.fetchList()
+    },
+    selectEditedItem(selectedItem) {
+      this.dialogProcess.isUpdate = true
+
+      const filteredItem = this.items.find(item => item.kode == selectedItem)
+      this.formItem.code = filteredItem.kode
+      this.formItem.description = filteredItem.deskripsi_barang
+      this.formItem.measurement = filteredItem.satuan
+      this.formItem.price = filteredItem.harga
+      this.dialogProcess.confirmation = true
     },
     fetchList() {
       this.loading = true
@@ -172,7 +180,9 @@ export default {
         .then(resp => {
           const editedData = resp.data.map(item => {
             item.codename_item = `${item.kode} - ${item.deskripsi_barang}`
-            item.harga = `Rp. ${parseInt(item.harga).toLocaleString('id')}`
+            item.formattedHarga = `Rp. ${parseInt(item.harga).toLocaleString(
+              'id'
+            )}`
             return item
           })
           this.items = editedData
