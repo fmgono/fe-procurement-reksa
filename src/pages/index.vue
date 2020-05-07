@@ -46,6 +46,8 @@
   </div>
 </template>
 <script>
+import Menus from '../menus'
+
 const userAuth = JSON.parse(localStorage.getItem('userAuth'))
 let user_code = userAuth ? userAuth.user_code : ''
 // if (userAuth) {
@@ -57,15 +59,7 @@ export default {
     drawer: null,
     menuTitle: 'Dashboard Page',
     userCode: user_code || '',
-    menus: [
-      { title: 'Dashboard', icon: 'mdi-view-dashboard-outline', link: '/' },
-      {
-        title: 'Delivery Order',
-        icon: 'mdi-truck-delivery-outline',
-        link: '/delivery_order'
-      },
-      { title: 'Invoice', icon: 'receipt', link: '/invoice' }
-    ]
+    menus: Menus
   }),
   methods: {
     handleBtnLogout() {
