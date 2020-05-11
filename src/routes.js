@@ -31,6 +31,13 @@ export default [
         }
       },
       {
+        path: 'mst_customers',
+        component: () => import('@/pages/MstCustomers/List.vue'),
+        meta: {
+          title: 'List Customers'
+        }
+      },
+      {
         path: 'delivery_order',
         component: () => import('@/pages/DeliveryOrder/List.vue'),
         meta: {
