@@ -6,10 +6,9 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col class="center-element">
-        <v-card outlined tile>
-          <v-card-title>PT BANDAR ELEKTRONIK</v-card-title>
-        </v-card>
+      <v-col class="center-element column-direction">
+        <img :src="logo" alt="logo" class="center" />
+        <div class="subtitle-1">PT BANDAR ELEKTRONIK</div>
       </v-col>
       <v-col>
         <!-- <v-card outlined tile> -->
@@ -130,12 +129,14 @@
 </template>
 <script>
 import axios from 'axios'
+import Logo from '@/assets/logo.png'
 
 const { token } = JSON.parse(localStorage.getItem('userAuth'))
 
 export default {
   data: () => ({
-    data: {}
+    data: {},
+    logo: Logo
   }),
   methods: {
     print() {
@@ -156,6 +157,12 @@ export default {
 }
 </script>
 <style scoped>
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 25%;
+}
 .table-print {
   border: thin solid rgba(0, 0, 0, 0.12);
 }
@@ -164,6 +171,10 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.column-direction {
+  flex-direction: column;
 }
 
 @media print {
