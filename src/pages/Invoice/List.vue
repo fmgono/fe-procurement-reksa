@@ -142,7 +142,7 @@ export default {
       }
     },
     dialogProcess: {
-      confirmation: true,
+      confirmation: false,
       confirmationMessage: '',
       isBtnDisabled: false,
       isLoading: false,
