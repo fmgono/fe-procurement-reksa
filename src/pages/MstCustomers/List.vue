@@ -16,6 +16,7 @@
           <v-text-field
             label="Customer Code"
             placeholder="001"
+            :class="[dialogProcess.isAddCust ? 'd-none' : '']"
             :filled="dialogProcess.isReadOnly || !dialogProcess.isAddCust"
             :readonly="dialogProcess.isReadOnly || !dialogProcess.isAddCust"
             v-model="formCustomer.code"
@@ -292,36 +293,43 @@ export default {
         ? 'api/cust/update'
         : 'api/cust/insert'
 
+      const dataToPost = {
+        store_name: this.formCustomer.name,
+        store_address: this.formCustomer.address,
+        store_city: this.formCustomer.city,
+        store_postal_code: this.formCustomer.postalCode,
+        store_area: this.formCustomer.area,
+        store_email: this.formCustomer.email,
+        store_cug: this.formCustomer.cug,
+        store_rgm: this.formCustomer.RGM,
+        rgm_cug: this.formCustomer.RGMCug,
+        business_hour: this.formCustomer.businessHour,
+        store_category: this.formCustomer.category,
+        store_status: this.formCustomer.status,
+        token: token
+      }
+
+      if (!this.dialogProcess.isUpdate) {
+        dataToPost.kode = this.formCustomer.code
+      }
+
       axios
-        .post(`${process.env.VUE_APP_BASE_API_URL}${url}`, {
-          kode: this.formCustomer.code,
-          store_name: this.formCustomer.name,
-          store_address: this.formCustomer.address,
-          store_city: this.formCustomer.city,
-          store_postal_code: this.formCustomer.postalCode,
-          store_area: this.formCustomer.area,
-          store_email: this.formCustomer.email,
-          store_cug: this.formCustomer.cug,
-          store_rgm: this.formCustomer.RGM,
-          rgm_cug: this.formCustomer.RGMCug,
-          business_hour: this.formCustomer.businessHour,
-          store_category: this.formCustomer.category,
-          store_status: this.formCustomer.status,
-          token: token
-        })
+        .post(`${process.env.VUE_APP_BASE_API_URL}${url}`, dataToPost)
         .then(resp => {
+          console.log(resp)
           this.dialogProcess.isLoading = false
           this.dialogProcess.isBtnDisabled = false
           this.dialogProcess.isSuccess = true
           this.dialogProcess.responseMessage = this.dialogProcess.isUpdate
             ? 'Customer has been successfully changed!'
-            : `Customer has been successfully created with code ${resp.data.data.kode} - ${resp.data.data.name} !`
+            : `Customer has been successfully created with code ${resp.data.data.kode} - ${resp.data.data.store_name}!`
         })
         .catch(() => {
           this.dialogProcess.isLoading = false
           this.dialogProcess.isLoading = false
           this.dialogProcess.isUpdate = false
           this.dialogProcess.isFailed = true
+          this.dialogProcess.isSuccess = true
           this.dialogProcess.responseMessage = `Oops! Something error`
         })
     },
