@@ -17,8 +17,8 @@
           ></v-progress-linear>
           <v-alert
             :class="[!dialogProcess.isSuccess ? 'd-none' : '']"
-            type="success"
-          >{{ dialogProcess.successMessage }}</v-alert>
+            :type="getStatusResponse"
+          >{{ dialogProcess.responseMessage }}</v-alert>
         </v-card-text>
         <!-- <v-card-text :class="[!dialogProcess.isSuccess ? 'd-none' : '']"></v-card-text> -->
         <v-card-actions>
@@ -289,7 +289,8 @@ export default {
       isBtnDisabled: false,
       isLoading: false,
       isSuccess: false,
-      successMessage: ''
+      isFailed: false,
+      responseMessage: ''
     },
     doNo: '',
     isFormWrapperValid: true,
@@ -365,7 +366,6 @@ ${customer.rgm_cug}
           `
           return customer
         })
-        console.log(customers)
 
         this.formData.autoCompleteCust = customers
       })
@@ -381,7 +381,13 @@ ${customer.rgm_cug}
       quantity = parseInt(quantity)
       price = parseInt(price)
       const totalPrice = quantity * price
-      const inputedItem = this.createItemObj(unique_id, itemID, quantity, price)
+      const inputedItem = this.createItemObj(
+        unique_id,
+        itemID,
+        itemName,
+        quantity,
+        price
+      )
       const displayToTable = this.createItemTable(
         unique_id,
         itemID,
@@ -407,7 +413,13 @@ ${customer.rgm_cug}
         item => item.id == this.formData.formItem.id
       )
 
-      const editedItem = this.createItemObj(id, itemID, quantity, price)
+      const editedItem = this.createItemObj(
+        id,
+        itemID,
+        itemName,
+        quantity,
+        price
+      )
       const displayToTable = this.createItemTable(
         id,
         itemID,
@@ -437,6 +449,7 @@ ${customer.rgm_cug}
     selectItemToEdit(id) {
       const filteredItem = this.formData.items.find(item => item.id == id)
       this.formData.formItem.itemID = filteredItem.do_itemid
+      this.formData.formItem.itemName = filteredItem.do_itemname
       this.formData.formItem.quantity = filteredItem.do_qty
       this.formData.formItem.price = filteredItem.do_cost
       this.formData.formItem.id = filteredItem.id
@@ -449,7 +462,7 @@ ${customer.rgm_cug}
       this.formData.formItem.isEdited = value.is_edit ? true : false
     },
     customerChange(value) {
-      this.formData.customerData.id = value.id
+      this.formData.customerData.id = value.kode
       this.formData.customerData.name = value.name
       this.formData.customerData.information = value.information
     },
@@ -510,15 +523,21 @@ ${customer.rgm_cug}
           this.doNo = doNo
           this.dialogProcess.isLoading = false
           this.dialogProcess.isSuccess = true
-          this.dialogProcess.successMessage = `Delivery Order has been successfully created with no ${this.doNo} !`
+          this.dialogProcess.responseMessage = `Delivery Order has been successfully created with no ${this.doNo} !`
         })
-        .catch(e => console.error(e))
+        .catch(e => {
+          console.error(e)
+          this.dialogProcess.isLoading = false
+          this.dialogProcess.isSuccess = true
+          this.dialogProcess.isFailed = true
+          this.dialogProcess.responseMessage = `Oops! Something wrong, try again later!`
+        })
     },
-    createItemObj(id, itemID, qty, cost) {
+    createItemObj(id, itemID, itemName, qty, cost) {
       return {
         id: id,
         do_itemid: itemID,
-        do_deskripsi: '',
+        do_itemname: itemName,
         do_qty: qty,
         do_cost: cost
       }
@@ -541,6 +560,9 @@ ${customer.rgm_cug}
   computed: {
     fromDateDisp() {
       return this.formatDate(this.date)
+    },
+    getStatusResponse() {
+      return this.dialogProcess.isFailed ? 'error' : 'success'
     }
   },
   watch: {

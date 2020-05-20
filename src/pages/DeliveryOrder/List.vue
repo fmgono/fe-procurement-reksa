@@ -187,7 +187,9 @@ export default {
         })
         .catch(() => {
           this.dialogProcess.isLoading = false
-          alert('Oops! Something wrong, try again later!')
+          this.dialogProcess.isSuccess = true
+          this.dialogProcess.isFailed = true
+          this.dialogProcess.responseMessage = `Oops! Something wrong, try again later!`
         })
     },
     btnInvoiceHandler(doNo) {
