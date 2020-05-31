@@ -23,6 +23,14 @@
             v-model="formItem.price"
             @keyup="onlyAllowNumeric"
           ></v-text-field>
+          <v-row align-content="center" justify="center">
+            <v-col align-self="center" cols="4">
+              <div class="body-1">Is Edited</div>
+            </v-col>
+            <v-col>
+              <v-switch v-model="formItem.isEdited"></v-switch>
+            </v-col>
+          </v-row>
           <v-progress-linear
             :class="[!dialogProcess.isLoading ? 'd-none' : '']"
             color="primary"
@@ -137,7 +145,8 @@ export default {
       code: '',
       description: '',
       measurement: 'Unit',
-      price: 0
+      price: 0,
+      isEdited: false
     },
     dialogProcess: {
       confirmation: false,
@@ -170,11 +179,14 @@ export default {
         ? 'api/item/update'
         : 'api/item/insert'
 
+      const isEdited = this.formItem.isEdited ? 1 : 0
+
       axios
         .post(`${process.env.VUE_APP_BASE_API_URL}${url}`, {
           kode: this.formItem.code,
           deskripsi_barang: this.formItem.description,
           satuan: this.formItem.measurement,
+          is_edit: isEdited,
           harga: this.formItem.price,
           token: token
         })
@@ -236,6 +248,7 @@ export default {
       this.formItem.description = filteredItem.deskripsi_barang
       this.formItem.measurement = filteredItem.satuan
       this.formItem.price = filteredItem.harga
+      this.formItem.isEdited = filteredItem.is_edit
       this.dialogProcess.confirmation = true
     },
     selectItemToDelete(selectedItem) {
