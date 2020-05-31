@@ -111,7 +111,7 @@
         <tbody>
           <tr v-for="item in data.inv_detail" :key="item.inv_rownum">
             <td>{{ item.inv_rownum }}</td>
-            <td>{{ item.inv_itemid }} - {{ item.deskripsi_barang }}</td>
+            <td>{{ item.inv_itemid }} - {{ item.inv_deskripsi }}</td>
             <td>{{ item.inv_qty }}</td>
             <td class="text-right">{{ item.inv_cost }}</td>
             <td class="text-right">{{ item.total_cost }}</td>
