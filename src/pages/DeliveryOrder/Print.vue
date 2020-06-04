@@ -8,7 +8,7 @@
     <v-row>
       <v-col class="center-element column-direction">
         <img :src="logo" alt="logo" class="center" />
-        <div class="subtitle-1">PT BANDAR ELEKTRONIK</div>
+        <div class="subtitle-1">CV BANDAR ELEKTRONIK</div>
       </v-col>
       <v-col>
         <!-- <v-card outlined tile> -->
@@ -70,7 +70,8 @@
         <thead>
           <tr>
             <th>No</th>
-            <th>Nama - Kode Produk</th>
+            <th>Deskripsi</th>
+            <th>Kode Item</th>
             <th>Jumlah</th>
             <th>Satuan</th>
             <th>Keterangan</th>
@@ -79,6 +80,7 @@
         <tbody>
           <tr v-for="item in data.do_detail" :key="item.do_rownum">
             <td>{{ item.do_rownum }}</td>
+            <td>{{ item.deskripsi_barang || ' - ' }}</td>
             <td>{{ item.do_itemid }}</td>
             <td>{{ item.do_qty }}</td>
             <td>{{ item.do_satuan }}</td>
