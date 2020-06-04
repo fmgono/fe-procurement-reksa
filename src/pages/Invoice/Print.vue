@@ -23,7 +23,7 @@
             <div class="body-2">Company ID</div>
           </v-col>
           <v-col class="text-right pt-0 pb-0">
-            <div class="body-2 font-weight-bold">PT Rekso Nasional Food</div>
+            <div class="body-2 font-weight-bold">CV Rekso Nasional Food</div>
           </v-col>
           <v-spacer class="d-print-none"></v-spacer>
           <v-spacer></v-spacer>
@@ -102,7 +102,8 @@
         <thead>
           <tr>
             <th>No</th>
-            <th>Code - Name Item</th>
+            <th>Deskripsi</th>
+            <th>Kode Item</th>
             <th>Qty</th>
             <th class="text-right">Unit Price</th>
             <th class="text-right">Total</th>
@@ -111,7 +112,8 @@
         <tbody>
           <tr v-for="item in data.inv_detail" :key="item.inv_rownum">
             <td>{{ item.inv_rownum }}</td>
-            <td>{{ item.inv_itemid }} - {{ item.inv_deskripsi }}</td>
+            <td>{{ item.deskripsi_barang }}</td>
+            <td>{{ item.inv_itemid }}</td>
             <td>{{ item.inv_qty }}</td>
             <td class="text-right">{{ item.inv_cost }}</td>
             <td class="text-right">{{ item.total_cost }}</td>
