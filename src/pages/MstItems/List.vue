@@ -5,6 +5,12 @@
         <v-card-title class="headline">{{dialogProcess.isUpdate ? 'Update' : 'Create'}} Item</v-card-title>
         <v-card-text>
           <v-text-field
+            :rules="[v => !!v || 'Item Code is required']"
+            label="Item Code"
+            placeholder="K-253-12121"
+            v-model="formItem.code"
+          ></v-text-field>
+          <v-text-field
             :rules="[v => !!v || 'Item Description is required']"
             label="Item Description"
             placeholder="K-253 - KULKAS 2 PINTU SANYO"
@@ -238,6 +244,10 @@ export default {
       this.dialogProcess.isFailed = false
       this.dialogProcess.isUpdate = false
       this.dialogProcess.responseMessage = ''
+      this.formItem.code = ''
+      this.formItem.description = ''
+      this.formItem.measurement = ''
+      this.formItem.price = ''
       this.fetchList()
     },
     selectItemToEdit(selectedItem) {
