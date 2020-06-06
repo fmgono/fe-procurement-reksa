@@ -15,18 +15,18 @@
           <v-col class="pb-0 text-right">
             <div class="body-2">{{ data.inv_date }} 121</div>
           </v-col>
-          <v-spacer class="d-print-none"></v-spacer>
-          <v-spacer></v-spacer>
+          <!-- <v-spacer class="d-print-none"></v-spacer> -->
+          <!-- <v-spacer></v-spacer> -->
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-0" cols="3">
             <div class="body-2">Company ID</div>
           </v-col>
           <v-col class="text-right pt-0 pb-0">
-            <div class="body-2 font-weight-bold">CV Rekso Nasional Food</div>
+            <div class="body-2 font-weight-bold">PT Rekso Nasional Food</div>
           </v-col>
-          <v-spacer class="d-print-none"></v-spacer>
-          <v-spacer></v-spacer>
+          <!-- <v-spacer class="d-print-none"></v-spacer> -->
+          <!-- <v-spacer></v-spacer> -->
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-0" cols="3">
@@ -35,8 +35,8 @@
           <v-col class="text-right pt-0 pb-0">
             <div class="body-2">{{ $route.params.invNo }}</div>
           </v-col>
-          <v-spacer class="d-print-none"></v-spacer>
-          <v-spacer></v-spacer>
+          <!-- <v-spacer class="d-print-none"></v-spacer> -->
+          <!-- <v-spacer></v-spacer> -->
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-0" cols="3">
@@ -45,8 +45,8 @@
           <v-col class="text-right pt-0 pb-0">
             <div class="body-2">{{ data.po_seq }}</div>
           </v-col>
-          <v-spacer class="d-print-none"></v-spacer>
-          <v-spacer></v-spacer>
+          <!-- <v-spacer class="d-print-none"></v-spacer> -->
+          <!-- <v-spacer></v-spacer> -->
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-0" cols="3">
@@ -55,10 +55,14 @@
           <v-col class="text-right pt-0">
             <div class="body-2">{{ data.kwitansi_seq }}</div>
           </v-col>
-          <v-spacer class="d-print-none"></v-spacer>
-          <v-spacer></v-spacer>
+          <!-- <v-spacer class="d-print-none"></v-spacer> -->
+          <!-- <v-spacer></v-spacer> -->
         </v-row>
         <!-- </v-card> -->
+      </v-col>
+      <v-col class="center-element column-direction">
+        <img :src="logo" alt="logo" class="center" />
+        <div class="subtitle-1">CV BANDAR ELEKTRONIK</div>
       </v-col>
     </v-row>
     <v-row>
@@ -201,12 +205,14 @@
 </template>
 <script>
 import axios from 'axios'
+import Logo from '@/assets/logo.png'
 
 const { token } = JSON.parse(localStorage.getItem('userAuth'))
 
 export default {
   data: () => ({
-    data: {}
+    data: {},
+    logo: Logo
   }),
   methods: {
     print() {
@@ -246,6 +252,10 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.column-direction {
+  flex-direction: column;
 }
 
 .assignment {

@@ -6,7 +6,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col class="center-element column-direction">
+      <v-col class="center-element column-direction" cols="3">
         <img :src="logo" alt="logo" class="center" />
         <div class="subtitle-1">CV BANDAR ELEKTRONIK</div>
       </v-col>
@@ -44,7 +44,7 @@
             <div class="body-1">Kepada YTH:</div>
           </v-col>
           <v-col class="text-right">
-            <div class="body-1">PT Reksa Nasional</div>
+            <div clastexts="body-1">PT Rekso Nasional Food</div>
           </v-col>
         </v-row>
         <v-row>
