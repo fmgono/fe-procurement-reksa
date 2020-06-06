@@ -16,7 +16,6 @@
           <v-text-field
             label="Customer Code"
             placeholder="001"
-            :class="[dialogProcess.isAddCust ? 'd-none' : '']"
             :filled="dialogProcess.isReadOnly || !dialogProcess.isAddCust"
             :readonly="dialogProcess.isReadOnly || !dialogProcess.isAddCust"
             v-model="formCustomer.code"
@@ -294,6 +293,7 @@ export default {
         : 'api/cust/insert'
 
       const dataToPost = {
+        kode: this.formCustomer.code,
         store_name: this.formCustomer.name,
         store_address: this.formCustomer.address,
         store_city: this.formCustomer.city,
