@@ -10,57 +10,57 @@
         <!-- <v-card outlined tile> -->
         <v-row>
           <v-col class="pb-0" cols="3">
-            <div class="body-2">Date</div>
+            <div class="text-caption">Date</div>
           </v-col>
           <v-col class="pb-0 text-right">
-            <div class="body-2">{{ data.inv_date }} 121</div>
+            <div class="text-caption">{{ data.inv_date }} 121</div>
           </v-col>
           <!-- <v-spacer class="d-print-none"></v-spacer> -->
           <!-- <v-spacer></v-spacer> -->
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-0" cols="3">
-            <div class="body-2">Company ID</div>
+            <div class="text-caption">Company ID</div>
           </v-col>
           <v-col class="text-right pt-0 pb-0">
-            <div class="body-2 font-weight-bold">PT Rekso Nasional Food</div>
+            <div class="text-caption font-weight-black">PT Rekso Nasional Food</div>
           </v-col>
           <!-- <v-spacer class="d-print-none"></v-spacer> -->
           <!-- <v-spacer></v-spacer> -->
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-0" cols="3">
-            <div class="body-2">Invoice</div>
+            <div class="text-caption">Invoice</div>
           </v-col>
           <v-col class="text-right pt-0 pb-0">
-            <div class="body-2">{{ $route.params.invNo }}</div>
+            <div class="text-caption">{{ $route.params.invNo }}</div>
           </v-col>
           <!-- <v-spacer class="d-print-none"></v-spacer> -->
           <!-- <v-spacer></v-spacer> -->
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-0" cols="3">
-            <div class="body-2">PO No</div>
+            <div class="text-caption">PO No</div>
           </v-col>
           <v-col class="text-right pt-0 pb-0">
-            <div class="body-2">{{ data.po_seq }}</div>
+            <div class="text-caption">{{ data.po_seq }}</div>
           </v-col>
           <!-- <v-spacer class="d-print-none"></v-spacer> -->
           <!-- <v-spacer></v-spacer> -->
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-0" cols="3">
-            <div class="body-2">Kwitansi No</div>
+            <div class="text-caption">Kwitansi No</div>
           </v-col>
           <v-col class="text-right pt-0">
-            <div class="body-2">{{ data.kwitansi_seq }}</div>
+            <div class="text-caption">{{ data.kwitansi_seq }}</div>
           </v-col>
           <!-- <v-spacer class="d-print-none"></v-spacer> -->
           <!-- <v-spacer></v-spacer> -->
         </v-row>
         <!-- </v-card> -->
       </v-col>
-      <v-col class="center-element column-direction">
+      <v-col class="center-element column-direction" cols="5">
         <img :src="logo" alt="logo" class="center" />
         <div class="subtitle-1">CV BANDAR ELEKTRONIK</div>
       </v-col>
@@ -70,32 +70,32 @@
         <!-- <v-card outlined tile> -->
         <v-row>
           <v-col class="pb-0">
-            <div class="body-2">Bill To</div>
+            <div class="text-caption">Bill To</div>
           </v-col>
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-1">
-            <div class="body-2 font-weight-bold">PT Rekso Nasional Food</div>
+            <div class="text-caption font-weight-black">PT Rekso Nasional Food</div>
           </v-col>
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-1">
-            <div class="body-2">Graha Rekso Building 5th Floor</div>
+            <div class="text-caption">Graha Rekso Building 5th Floor</div>
           </v-col>
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-1">
-            <div class="body-2">Jl. Bulevar Artha Gading Kav. A1</div>
+            <div class="text-caption">Jl. Bulevar Artha Gading Kav. A1</div>
           </v-col>
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-1">
-            <div class="body-2">Sentra Bisnis Artha Gading</div>
+            <div class="text-caption">Sentra Bisnis Artha Gading</div>
           </v-col>
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-1">
-            <div class="body-2">Jakarta Utara 14240</div>
+            <div class="text-caption">Jakarta Utara 14240</div>
           </v-col>
         </v-row>
         <!-- </v-card> -->
@@ -129,10 +129,10 @@
             <td class="subtitle-2 text-right">{{data.total_cost}}</td>
           </tr>
           <tr>
-            <td colspan="2" class="text-center body-2 font-weight-bold">Terbilang</td>
+            <td colspan="2" class="text-center text-caption font-weight-black">Terbilang</td>
             <td
               colspan="3"
-              class="capitalize text-right body-2 font-weight-bold font-italic"
+              class="capitalize text-right text-caption font-weight-black font-italic"
             >{{data.terbilang}}</td>
           </tr>
         </tfoot>
@@ -144,32 +144,32 @@
         <!-- <v-card outlined tile> -->
         <v-row>
           <v-col class="pb-0">
-            <div class="body-2 font-weight-bold underline">Notes :</div>
+            <div class="text-caption font-weight-black underline">Notes :</div>
           </v-col>
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-1">
-            <div class="body-2">Jatuh Tempo Pembayaran</div>
+            <div class="text-caption">Jatuh Tempo Pembayaran</div>
           </v-col>
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-1">
-            <div class="body-2">Setelah Invoice diterbitkan, dan harap transfer ke:</div>
+            <div class="text-caption">Setelah Invoice diterbitkan, dan harap transfer ke:</div>
           </v-col>
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-1">
-            <div class="body-2 font-weight-bold">CV. Bandar Elektronik</div>
+            <div class="text-caption font-weight-black">CV. Bandar Elektronik</div>
           </v-col>
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-1">
-            <div class="body-2 font-weight-bold">Bank Mega KCP Indomobil MT. Haryono</div>
+            <div class="text-caption font-weight-black">Bank Mega KCP Indomobil MT. Haryono</div>
           </v-col>
         </v-row>
         <v-row>
           <v-col class="pb-0 pt-1">
-            <div class="body-2 font-weight-bold">No. Rek: 01-133-00-11-77777-0</div>
+            <div class="text-caption font-weight-black">No. Rek: 01-133-00-11-77777-0</div>
           </v-col>
         </v-row>
         <!-- </v-card> -->
@@ -177,18 +177,18 @@
     </v-row>
     <v-row>
       <v-col>
-        <div class="body-2">&nbsp;</div>
-        <!-- <div class="body-2 font-weight-bold">SHAHRIAL</div> -->
+        <div class="text-caption">&nbsp;</div>
+        <!-- <div class="text-caption font-weight-black">SHAHRIAL</div> -->
       </v-col>
       <v-col>
         <v-row>
           <v-col class="pb-10">
-            <div class="body-2 text-center">Hormat Kami,</div>
+            <div class="text-caption text-center">Hormat Kami,</div>
           </v-col>
         </v-row>
         <v-row>
           <v-col class="pt-10">
-            <div class="body-2 text-center font-weight-bold">SHAHRIAL</div>
+            <div class="text-caption text-center font-weight-black">SHAHRIAL</div>
           </v-col>
         </v-row>
       </v-col>
@@ -241,11 +241,11 @@ export default {
 </script>
 <style scoped>
 .print-invoice {
-  font-size: ;
+  font-size: 12px !important;
 }
 
 .table-print {
-  border: thin solid rgba(0, 0, 0, 0.12);
+  border: thin solid rgba(0, 0, 0, 0.63);
 }
 
 .center-element {

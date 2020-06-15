@@ -1,39 +1,43 @@
 <template>
-  <div>
+  <div class="body">
     <v-row>
       <v-col class="pb-0 center-element">
         <v-card-title>SURAT JALAN / DO</v-card-title>
       </v-col>
     </v-row>
     <v-row>
-      <v-col class="center-element column-direction" cols="3">
+      <v-col class="center-element column-direction custom-row" cols="3">
         <img :src="logo" alt="logo" class="center" />
-        <div class="subtitle-1">CV BANDAR ELEKTRONIK</div>
+        <v-card-text>&nbsp;</v-card-text>
+        <div class="text-caption">CV BANDAR ELEKTRONIK</div>
       </v-col>
       <v-col>
         <!-- <v-card outlined tile> -->
         <v-row>
+          <!-- <v-col><v-spacer></v-spacer></v-col> -->
           <v-col class="pb-0">
-            <div class="body-1">No PO :</div>
+            <div class="text-caption">No PO :</div>
           </v-col>
           <v-col class="text-right">
-            <div class="body-1">{{ data.po_seq }}</div>
+            <div class="text-caption">{{ data.po_seq }}</div>
           </v-col>
         </v-row>
         <v-row>
-          <v-col class="pb-0">
-            <div class="body-1">No DO :</div>
+          <!-- <v-col><v-spacer></v-spacer></v-col> -->
+          <v-col class="pb-0 pt-0">
+            <div class="text-caption">No DO :</div>
           </v-col>
-          <v-col class="text-right">
-            <div class="body-1">{{ data.do_seq }}</div>
+          <v-col class="text-right pt-0">
+            <div class="text-caption">{{ data.do_seq }}</div>
           </v-col>
         </v-row>
         <v-row>
-          <v-col class="pb-0">
-            <div class="body-1">Tanggal :</div>
+          <!-- <v-col><v-spacer></v-spacer></v-col> -->
+          <v-col class="pb-0 pt-0">
+            <div class="text-caption">Tanggal :</div>
           </v-col>
-          <v-col class="text-right">
-            <div class="body-1">{{ data.do_date }}</div>
+          <v-col class="text-right pt-0">
+            <div class="text-caption">{{ data.do_date }}</div>
           </v-col>
         </v-row>
         <!-- </v-card> -->
@@ -41,25 +45,25 @@
       <v-col>
         <v-row>
           <v-col class="pb-0">
-            <div class="body-1">Kepada YTH:</div>
+            <div class="text-caption">Kepada YTH:</div>
           </v-col>
           <v-col class="text-right">
-            <div clastexts="body-1">PT Rekso Nasional Food</div>
+            <div clastexts="text-caption">PT Rekso Nasional Food</div>
           </v-col>
         </v-row>
         <v-row>
-          <v-col class="pb-0" cols="2">
-            <div class="body-1">Alamat:</div>
+          <v-col class="pb-0 pt-0" cols="2">
+            <div class="text-caption">Alamat:</div>
           </v-col>
-          <v-col class="text-right" cols="10">
-            <div class="body-1">Graha Rekso Building 5th floor</div>
+          <v-col class="text-right pt-0" cols="10">
+            <div class="text-caption">Graha Rekso Building 5th floor</div>
           </v-col>
         </v-row>
         <v-row>
-          <v-col class="pb-0" cols="2">
-            <div class="body-1"></div>
+          <v-col class="pb-0 pt-0" cols="2">
+            <div class="text-caption"></div>
           </v-col>
-          <v-col class="text-right mt-5" cols="10">
+          <v-col class="text-right pt-0 mt-5" cols="10">
             <hr />
           </v-col>
         </v-row>
@@ -95,27 +99,27 @@
         <v-card outlined tile>
           <v-card-text class="text-center">Dikirim Oleh</v-card-text>
           <!-- <v-card-text>&nbsp;</v-card-text> -->
-          <v-card-text>&nbsp;</v-card-text>
+          <!-- <v-card-text>&nbsp;</v-card-text> -->
           <v-card-text class="pb-0">Nama &nbsp; :</v-card-text>
-          <v-card-text class="pt-2">Tanggal :</v-card-text>
+          <v-card-text class="pt-1">Tanggal :</v-card-text>
         </v-card>
       </v-col>
       <v-col>
         <v-card outlined tile>
           <v-card-text class="text-center">Diketahui Oleh</v-card-text>
           <!-- <v-card-text>&nbsp;</v-card-text> -->
-          <v-card-text>&nbsp;</v-card-text>
+          <!-- <v-card-text>&nbsp;</v-card-text> -->
           <v-card-text class="pb-0">Nama &nbsp; :</v-card-text>
-          <v-card-text class="pt-2">Tanggal :</v-card-text>
+          <v-card-text class="pt-1">Tanggal :</v-card-text>
         </v-card>
       </v-col>
       <v-col>
         <v-card outlined tile>
           <v-card-text class="text-center">Diterima Oleh</v-card-text>
           <!-- <v-card-text>&nbsp;</v-card-text> -->
-          <v-card-text>&nbsp;</v-card-text>
+          <!-- <v-card-text>&nbsp;</v-card-text> -->
           <v-card-text class="pb-0">Nama &nbsp; :</v-card-text>
-          <v-card-text class="pt-2">Tanggal :</v-card-text>
+          <v-card-text class="pt-1">Tanggal :</v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -159,14 +163,31 @@ export default {
 }
 </script>
 <style scoped>
+.body {
+  font-size: 10px !important;
+}
 .center {
   display: block;
   margin-left: auto;
   margin-right: auto;
   width: 25%;
 }
+
+.custom-row div {
+  padding-top: 0;
+}
+
 .table-print {
-  border: thin solid rgba(0, 0, 0, 0.12);
+  border: thin solid rgba(0, 0, 0, 0.63) !important;
+}
+
+.theme--light.v-card.v-card--outlined {
+  border: thin solid rgba(0, 0, 0, 0.63);
+}
+
+.v-data-table td {
+  font-size: 0.7rem;
+  height: 35px;
 }
 
 .center-element {
